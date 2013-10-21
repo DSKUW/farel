@@ -1,0 +1,17 @@
+# ... Eclipse-specific
+.metadata/
+.project/
+.settings/
+.classpath
+.project
+# ... maven-specific
+build/
+target/
+# ... vim-specific
+.swp
+*~
+# ... others
+# TestNG
+test-output/
+# SVN
+.svn/
