@@ -3,18 +3,18 @@ package pl.edu.uw.dsk.monitoring;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-class JenkinsBean {
+class JenkinsSimpleBean {
     String result;
 
     public String getResult() {
         return result;
     }
-
     public void setResult(String result) {
         this.result = result;
     }
 }
-class Token {
+
+class OpsViewToken {
 
     private String token;
 
@@ -28,27 +28,27 @@ class Token {
 }
 
 class OpsViewResponse {
-    public Summary getSummary() {
+    public OpsViewSummary getSummary() {
         return summary;
     }
 
-    public void setSummary(Summary summary) {
+    public void setSummary(OpsViewSummary summary) {
         this.summary = summary;
     }
 
-    public Status[] getList() {
+    public OpsViewState[] getList() {
         return list;
     }
 
-    public void setList(Status[] list) {
+    public void setList(OpsViewState[] list) {
         this.list = list;
     }
 
-    public Summary summary;
-    public Status[] list = new Status[1];
+    public OpsViewSummary summary;
+    public OpsViewState[] list = new OpsViewState[1];
 }
 
-class Summary {
+class OpsViewSummary {
     public int getHandled() {
         return handled;
     }
@@ -73,30 +73,30 @@ class Summary {
         this.total = total;
     }
 
-    public Service getService() {
+    public OpsViewService getService() {
         return service;
     }
 
-    public void setService(Service service) {
+    public void setService(OpsViewService service) {
         this.service = service;
     }
 
-    public Host getHost() {
+    public OpsViewHost getHost() {
         return host;
     }
 
-    public void setHost(Host host) {
+    public void setHost(OpsViewHost host) {
         this.host = host;
     }
 
     int handled;
     int unhandled;
     int total;
-    Service service;
-    Host host;
+    OpsViewService service;
+    OpsViewHost host;
 }
 
-class Service {
+class OpsViewService {
     public int getOk() {
         return ok;
     }
@@ -135,7 +135,7 @@ class Service {
     int total;
 }
 
-class Host {
+class OpsViewHost {
     public int getHandled() {
         return handled;
     }
@@ -174,7 +174,7 @@ class Host {
     int total;
 }
 
-class Status {
+class OpsViewState {
     public String getIcon() {
         return icon;
     }
@@ -191,11 +191,11 @@ class Status {
         this.state = state;
     }
 
-    public InnerSummary getSummary() {
+    public OpsViewInnerSummary getSummary() {
         return summary;
     }
 
-    public void setSummary(InnerSummary summary) {
+    public void setSummary(OpsViewInnerSummary summary) {
         this.summary = summary;
     }
 
@@ -231,11 +231,11 @@ class Status {
         this.state_duration = state_duration;
     }
 
-    public Services[] getServices() {
+    public OpsViewServices[] getServices() {
         return services;
     }
 
-    public void setServices(Services[] services) {
+    public void setServices(OpsViewServices[] services) {
         this.services = services;
     }
 
@@ -305,13 +305,13 @@ class Status {
 
     String icon;
     String state;
-    InnerSummary summary;
+    OpsViewInnerSummary summary;
 
     int unhandled;
     int max_check_attempts;
     int num_interfaces;
     int state_duration;
-    Services[] services = new Services[5];
+    OpsViewServices[] services = new OpsViewServices[5];
     String name;
     String state_type;
     int current_check_attempt;
@@ -322,7 +322,7 @@ class Status {
     String alias;
 }
 
-class InnerSummary {
+class OpsViewInnerSummary {
     public int getOk() {
         return ok;
     }
@@ -370,7 +370,7 @@ class InnerSummary {
     int total;
 }
 
-class Services {
+class OpsViewServices {
     public int getMax_check_attempts() {
         return max_check_attempts;
     }
