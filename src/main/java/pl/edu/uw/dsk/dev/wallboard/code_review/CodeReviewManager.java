@@ -1,6 +1,5 @@
-package pl.edu.uw.dsk.monitoring;
+package pl.edu.uw.dsk.dev.wallboard.code_review;
 
-import java.io.IOException;
 import java.net.URI;
 
 import org.apache.http.HttpHost;
@@ -11,46 +10,47 @@ import org.apache.http.client.AuthCache;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.protocol.HttpClientContext;
-import org.apache.http.impl.auth.BasicScheme;
+import org.apache.http.impl.auth.DigestScheme;
 import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
+//import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
-public class JenkinsStatus {
-    static private final String JENKINS_API_URL = "https://adres.strony/";
-    static private final String JENKINS_USERNAME = "login";
-    static private final String JENKINS_PASSWORD = "password";
-    private RestTemplate restTemplate = new RestTemplate();
-    private ObjectMapper mapper = new ObjectMapper();
-    private String jenkinsStatus = null;
-    private JenkinsSimpleBean jenkinsBean = null;
-    
-    public void displayStatus() {
-        System.out.println("JENKIN'S LAST BUILD STATUS:");
-        System.out.println(jenkinsBean.getResult());
-    }
-    
-    JenkinsStatus() throws JsonParseException, JsonMappingException, IOException{
-        HttpComponentsClientHttpRequestFactory customFactory = createCustomRequestFactory();
-        restTemplate =  new RestTemplate(customFactory);
-        jenkinsStatus = restTemplate.getForObject(JENKINS_API_URL + "job/probad-nightly/lastBuild/api/json", String.class);
-        jenkinsBean = mapper.readValue(jenkinsStatus, JenkinsSimpleBean.class);
-    }
+import pl.edu.uw.dsk.dev.wallboard.LoginInfo;
 
-    private ContextAwareHttpComponentsClientHttpRequestFactory createCustomRequestFactory() {
-        CredentialsProvider credentialsProvider = createCredentialsProvider(JENKINS_USERNAME, JENKINS_PASSWORD);
+public class CodeReviewManager {
+
+    private String baseUrl;
+    private String username;
+    private String password;
+    
+    private RestTemplate restTemplate = new RestTemplate();
+    //private ObjectMapper mapper = new ObjectMapper();
+    private String codereviewStatus;
+    //private JenCodereviewpleBean CodereviewBean = null;
+
+    public CodeReviewManager(String baseUrl, LoginInfo loginInfo) {
+        this.username = loginInfo.getUsername();
+        this.password = loginInfo.getPassword();
+        this.baseUrl = baseUrl;
+    }
+    public String getStatus(String projectName) {
+        setupContext();
+        codereviewStatus = restTemplate.getForObject(this.baseUrl + "a/projects/" + projectName, String.class);
+        //tworzenie beana
+        return codereviewStatus;
+    }
+    private void setupContext() {
+        CredentialsProvider credentialsProvider = createCredentialsProvider(username, password);
         HttpClient httpClient = HttpClientBuilder.create().setDefaultCredentialsProvider(credentialsProvider).build();
         ContextAwareHttpComponentsClientHttpRequestFactory customFactory = new ContextAwareHttpComponentsClientHttpRequestFactory(httpClient);
         customFactory.setHttpContext(createHttpContext());
-        return customFactory;
+        restTemplate = new RestTemplate(customFactory);
     }
 
     private CredentialsProvider createCredentialsProvider(String username, String password) {
@@ -68,8 +68,10 @@ public class JenkinsStatus {
 
     private AuthCache createAuthCache() {
         AuthCache authCache = new BasicAuthCache();
-        BasicScheme basicAuth = new BasicScheme();
-        authCache.put(getTargetHost(), basicAuth);
+        DigestScheme digestAuth = new DigestScheme();
+        digestAuth.overrideParamter("realm", "test");
+        digestAuth.overrideParamter("nonce", "");
+        authCache.put(getTargetHost(), digestAuth);
         return authCache;
     }
 
