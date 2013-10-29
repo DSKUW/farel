@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 
 import pl.edu.uw.dsk.dev.wallboard.LoginInfo;
 import pl.edu.uw.dsk.dev.wallboard.bug_tracking.entities.JiraSession;
+import pl.edu.uw.dsk.dev.wallboard.bug_tracking.entities.TicketEntity;
 import pl.edu.uw.dsk.dev.wallboard.exceptions.TechnicalException;
 
 public class JiraManager {
@@ -27,7 +28,7 @@ public class JiraManager {
 
         private JiraSession token;
         private HttpEntity<String> authorizedRequest;
-        //private JiraStatus jiraStatus;
+        private TicketEntity ticketEntity;
 
         private RestTemplate restTemplate = new RestTemplate();
         private ObjectMapper json2ObjectMapper = new ObjectMapper();
@@ -38,16 +39,15 @@ public class JiraManager {
             this.baseUrl = baseUrl;
         }
 
-        public void getStatus(String ticketName) {
+        public String getStatus(String ticketName) {
             //zmienic zeby zwracalo beana (ktorego najpierw musze stworzyc)
             //w ktorym bedzie metoda toString ktora bedzie zwracac info
             obtainToken();
             createAuthorizedRequest();
             ResponseEntity<String> response = restTemplate.exchange(baseUrl + "api/2.0.alpha1/issue/" + ticketName,
                             HttpMethod.GET, authorizedRequest, String.class);
-            System.out.println(response.getBody());
-            //hostStatus = parseObjectInJson(response.getBody(), HostStatus.class);
-            //return hostStatus;
+            ticketEntity = parseObjectInJson(response.getBody(), TicketEntity.class);
+            return ticketEntity.toString();
         }
 
         private void createAuthorizedRequest() {

@@ -1,5 +1,6 @@
 package pl.edu.uw.dsk.dev.wallboard.code_review;
 
+import java.io.IOException;
 import java.net.URI;
 
 import org.apache.http.HttpHost;
@@ -16,39 +17,52 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
-//import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 import pl.edu.uw.dsk.dev.wallboard.LoginInfo;
+import pl.edu.uw.dsk.dev.wallboard.code_review.entites.ProjectStatus;
+import pl.edu.uw.dsk.dev.wallboard.exceptions.TechnicalException;
 
 public class CodeReviewManager {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CodeReviewManager.class);
 
     private String baseUrl;
     private String username;
     private String password;
-    
+
     private RestTemplate restTemplate = new RestTemplate();
-    //private ObjectMapper mapper = new ObjectMapper();
-    private String codereviewStatus;
-    //private JenCodereviewpleBean CodereviewBean = null;
+    private ObjectMapper json2ObjectMapper = new ObjectMapper();
+    private ProjectStatus projectStatus;
 
     public CodeReviewManager(String baseUrl, LoginInfo loginInfo) {
         this.username = loginInfo.getUsername();
         this.password = loginInfo.getPassword();
         this.baseUrl = baseUrl;
     }
-    public String getStatus(String projectName) {
+
+    public ProjectStatus getStatus(String projectName) {
         setupContext();
-        codereviewStatus = restTemplate.getForObject(this.baseUrl + "a/projects/" + projectName, String.class);
-        //tworzenie beana
-        return codereviewStatus;
+        String codereviewStatus = restTemplate.getForObject(this.baseUrl + "a/projects/" + projectName, String.class);
+        codereviewStatus = removeMagicChars(codereviewStatus);
+        projectStatus = parseObjectInJson(codereviewStatus, ProjectStatus.class);
+        return projectStatus;
     }
+    
+    private String removeMagicChars(String magicString) {
+        return magicString.substring(magicString.indexOf("{"));
+    }
+
     private void setupContext() {
         CredentialsProvider credentialsProvider = createCredentialsProvider(username, password);
         HttpClient httpClient = HttpClientBuilder.create().setDefaultCredentialsProvider(credentialsProvider).build();
-        ContextAwareHttpComponentsClientHttpRequestFactory customFactory = new ContextAwareHttpComponentsClientHttpRequestFactory(httpClient);
+        ContextAwareHttpComponentsClientHttpRequestFactory customFactory = new ContextAwareHttpComponentsClientHttpRequestFactory(
+                        httpClient);
         customFactory.setHttpContext(createHttpContext());
         restTemplate = new RestTemplate(customFactory);
     }
@@ -69,8 +83,8 @@ public class CodeReviewManager {
     private AuthCache createAuthCache() {
         AuthCache authCache = new BasicAuthCache();
         DigestScheme digestAuth = new DigestScheme();
-        digestAuth.overrideParamter("realm", "test");
-        digestAuth.overrideParamter("nonce", "");
+        // digestAuth.overrideParamter("realm", "test");
+        // digestAuth.overrideParamter("nonce", "");
         authCache.put(getTargetHost(), digestAuth);
         return authCache;
     }
@@ -81,17 +95,26 @@ public class CodeReviewManager {
 
     private class ContextAwareHttpComponentsClientHttpRequestFactory extends HttpComponentsClientHttpRequestFactory {
         private HttpContext httpContext;
-        
+
         public ContextAwareHttpComponentsClientHttpRequestFactory(HttpClient httpClient) {
             super(httpClient);
         }
-        
+
         protected HttpContext createHttpContext(HttpMethod httpMethod, URI uri) {
             return httpContext;
         }
-        
+
         public void setHttpContext(HttpContext httpContext) {
             this.httpContext = httpContext;
+        }
+    }
+
+    public <T> T parseObjectInJson(String objectInJson, Class<T> objectClass) throws TechnicalException {
+        try {
+            return json2ObjectMapper.readValue(objectInJson, objectClass);
+        } catch (IOException e) {
+            LOGGER.error("Error durning parsing object of class '{}' from response '{}'", objectClass, objectInJson, e);
+            throw new TechnicalException(e);
         }
     }
 }

@@ -60,7 +60,7 @@ public class StatusMonitor {
         LoginInfo codeReviewLoginInfo = new LoginInfo(CODEREVIEW_LOGIN, CODEREVIEW_PASSWORD);
         String projectName = "probad";
         CodeReviewManager codeReviewManager = new CodeReviewManager(CODEREVIEW_BASE_URL, codeReviewLoginInfo);
-        LOGGER.info("CODEREVIEW STATUS:" + codeReviewManager.getStatus(projectName));
+        LOGGER.info("CODEREVIEW STATUS:\n" + codeReviewManager.getStatus(projectName));
     }
 
     private static void jira() throws IOException {
