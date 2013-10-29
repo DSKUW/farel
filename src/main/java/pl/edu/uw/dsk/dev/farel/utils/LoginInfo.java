@@ -1,9 +1,9 @@
-package pl.edu.uw.dsk.dev.wallboard;
+package pl.edu.uw.dsk.dev.farel.utils;
 
 public class LoginInfo {
     private String username;
     private String password;
-    LoginInfo(String username, String password){
+    public LoginInfo(String username, String password){
         this.username = username;
         this.password = password;
     }

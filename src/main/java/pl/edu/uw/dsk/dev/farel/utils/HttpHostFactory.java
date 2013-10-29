@@ -1,10 +1,10 @@
-package pl.edu.uw.dsk.dev.wallboard.utils;
+package pl.edu.uw.dsk.dev.farel.utils;
 
 import org.apache.http.HttpHost;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pl.edu.uw.dsk.dev.wallboard.exceptions.TechnicalException;
+import pl.edu.uw.dsk.dev.farel.exceptions.TechnicalException;
 
 public class HttpHostFactory {
 
@@ -14,7 +14,7 @@ public class HttpHostFactory {
      * @throws TechnicalException TODO
      */
     public static HttpHost fromString(String url) throws TechnicalException {
-        LOGGER.info("Creating HttpHost from given string: '{}'.", url);
+        LOGGER.trace("Creating HttpHost from given string: '{}'.", url);
 
         String[] splittedUrl = url.split("://");
         String scheme = splittedUrl[0];

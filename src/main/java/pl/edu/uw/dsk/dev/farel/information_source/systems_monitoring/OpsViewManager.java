@@ -1,4 +1,4 @@
-package pl.edu.uw.dsk.dev.wallboard.systems_monitoring;
+package pl.edu.uw.dsk.dev.farel.information_source.systems_monitoring;
 
 import java.io.IOException;
 
@@ -13,10 +13,10 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import pl.edu.uw.dsk.dev.wallboard.LoginInfo;
-import pl.edu.uw.dsk.dev.wallboard.exceptions.TechnicalException;
-import pl.edu.uw.dsk.dev.wallboard.systems_monitoring.entities.HostStatus;
-import pl.edu.uw.dsk.dev.wallboard.systems_monitoring.entities.OpsViewToken;
+import pl.edu.uw.dsk.dev.farel.exceptions.TechnicalException;
+import pl.edu.uw.dsk.dev.farel.information_source.systems_monitoring.entities.HostStatus;
+import pl.edu.uw.dsk.dev.farel.information_source.systems_monitoring.entities.OpsViewToken;
+import pl.edu.uw.dsk.dev.farel.utils.LoginInfo;
 
 public class OpsViewManager {
 

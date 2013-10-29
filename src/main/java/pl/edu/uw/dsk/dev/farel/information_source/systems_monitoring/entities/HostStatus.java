@@ -1,4 +1,4 @@
-package pl.edu.uw.dsk.dev.wallboard.systems_monitoring.entities;
+package pl.edu.uw.dsk.dev.farel.information_source.systems_monitoring.entities;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 

@@ -1,17 +1,18 @@
-package pl.edu.uw.dsk.dev.wallboard;
+package pl.edu.uw.dsk.dev.farel;
 
 import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pl.edu.uw.dsk.dev.wallboard.bug_tracking.JiraManager;
-import pl.edu.uw.dsk.dev.wallboard.code_review.CodeReviewManager;
-import pl.edu.uw.dsk.dev.wallboard.continuous_integration.JenkinsManager;
-import pl.edu.uw.dsk.dev.wallboard.continuous_integration.entities.BuildStatus;
-import pl.edu.uw.dsk.dev.wallboard.exceptions.TechnicalException;
-import pl.edu.uw.dsk.dev.wallboard.systems_monitoring.OpsViewManager;
-import pl.edu.uw.dsk.dev.wallboard.systems_monitoring.entities.HostStatus;
+import pl.edu.uw.dsk.dev.farel.exceptions.TechnicalException;
+import pl.edu.uw.dsk.dev.farel.information_source.bug_tracking.JiraManager;
+import pl.edu.uw.dsk.dev.farel.information_source.code_review.CodeReviewManager;
+import pl.edu.uw.dsk.dev.farel.information_source.continuous_integration.JenkinsManager;
+import pl.edu.uw.dsk.dev.farel.information_source.continuous_integration.entities.BuildStatus;
+import pl.edu.uw.dsk.dev.farel.information_source.systems_monitoring.OpsViewManager;
+import pl.edu.uw.dsk.dev.farel.information_source.systems_monitoring.entities.HostStatus;
+import pl.edu.uw.dsk.dev.farel.utils.LoginInfo;
 
 public class StatusMonitor {
 
@@ -34,9 +35,9 @@ public class StatusMonitor {
     private static final String JIRA_PASSWORD = "password";
 
     public static void main(String[] args) throws TechnicalException, IOException {
-        //opsView();
-        //jenkins();
-        //codeReview();
+        opsView();
+        jenkins();
+        codeReview();
         jira();
     }
 
@@ -67,7 +68,6 @@ public class StatusMonitor {
         LoginInfo jiraLoginInfo = new LoginInfo(JIRA_LOGIN, JIRA_PASSWORD);
         String ticketName = "PROBAD-13";
         JiraManager jiraManager = new JiraManager(JIRA_BASE_URL, jiraLoginInfo);
-        jiraManager.getStatus(ticketName);
-        LOGGER.info("JIRA TICKET STATUS:");
+        LOGGER.info("CODEREVIEW STATUS:\n" + jiraManager.getStatus(ticketName));
     }
 }

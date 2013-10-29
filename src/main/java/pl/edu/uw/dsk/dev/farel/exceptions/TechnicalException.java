@@ -1,4 +1,4 @@
-package pl.edu.uw.dsk.dev.wallboard.exceptions;
+package pl.edu.uw.dsk.dev.farel.exceptions;
 
 public class TechnicalException extends RuntimeException{
 

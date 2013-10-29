@@ -1,8 +1,7 @@
-package pl.edu.uw.dsk.dev.wallboard.bug_tracking;
+package pl.edu.uw.dsk.dev.farel.information_source.bug_tracking;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
@@ -13,10 +12,10 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import pl.edu.uw.dsk.dev.wallboard.LoginInfo;
-import pl.edu.uw.dsk.dev.wallboard.bug_tracking.entities.JiraSession;
-import pl.edu.uw.dsk.dev.wallboard.bug_tracking.entities.TicketEntity;
-import pl.edu.uw.dsk.dev.wallboard.exceptions.TechnicalException;
+import pl.edu.uw.dsk.dev.farel.exceptions.TechnicalException;
+import pl.edu.uw.dsk.dev.farel.information_source.bug_tracking.entities.JiraSession;
+import pl.edu.uw.dsk.dev.farel.information_source.bug_tracking.entities.TicketEntity;
+import pl.edu.uw.dsk.dev.farel.utils.LoginInfo;
 
 public class JiraManager {
 
@@ -26,7 +25,7 @@ public class JiraManager {
         private String username;
         private String password;
 
-        private JiraSession token;
+        private JiraSession sessionID;
         private HttpEntity<String> authorizedRequest;
         private TicketEntity ticketEntity;
 
@@ -40,8 +39,6 @@ public class JiraManager {
         }
 
         public String getStatus(String ticketName) {
-            //zmienic zeby zwracalo beana (ktorego najpierw musze stworzyc)
-            //w ktorym bedzie metoda toString ktora bedzie zwracac info
             obtainToken();
             createAuthorizedRequest();
             ResponseEntity<String> response = restTemplate.exchange(baseUrl + "api/2.0.alpha1/issue/" + ticketName,
@@ -52,17 +49,17 @@ public class JiraManager {
 
         private void createAuthorizedRequest() {
             HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.add("JSESSIONID", token.getSessionId());
+            httpHeaders.add("Cookie", "JSESSIONID=" + sessionID.getSessionId());
             authorizedRequest = new HttpEntity<String>(httpHeaders);
         }
 
         private JiraSession obtainToken() {
-            String tokenInJson = restTemplate.postForObject(baseUrl + "auth/1/session", getOpsviewCredentials(), String.class);
-            token = parseObjectInJson(tokenInJson, JiraSession.class);
-            return token;
+            String tokenInJson = restTemplate.postForObject(baseUrl + "auth/1/session", getCredentials(), String.class);
+            sessionID = parseObjectInJson(tokenInJson, JiraSession.class);
+            return sessionID;
         }
 
-        private HashMap<String, String> getOpsviewCredentials() {
+        private HashMap<String, String> getCredentials() {
             HashMap<String, String> map = new HashMap<String, String>();
             map.put("username", username);
             map.put("password", password);

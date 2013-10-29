@@ -1,4 +1,4 @@
-package pl.edu.uw.dsk.dev.wallboard.bug_tracking.entities;
+package pl.edu.uw.dsk.dev.farel.information_source.bug_tracking.entities;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -7,15 +7,15 @@ public class TicketEntity {
     public Fields fields;
     @JsonIgnoreProperties(ignoreUnknown = true)
     private static class Fields {
-        Summary summary;
-        Description description;
+        public Summary summary;
+        public Description description;
         @JsonIgnoreProperties(ignoreUnknown = true)
         private static class Summary {
-            String value;
+            public String value;
         }
         @JsonIgnoreProperties(ignoreUnknown = true)
         private static class Description {
-            String value;
+            public String value;
         }
     }
     public String toString() {

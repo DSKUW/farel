@@ -1,7 +1,6 @@
-package pl.edu.uw.dsk.dev.wallboard.code_review;
+package pl.edu.uw.dsk.dev.farel.information_source.continuous_integration;
 
 import java.io.IOException;
-import java.net.URI;
 
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
@@ -11,7 +10,7 @@ import org.apache.http.client.AuthCache;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.protocol.HttpClientContext;
-import org.apache.http.impl.auth.DigestScheme;
+import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -20,51 +19,45 @@ import org.apache.http.protocol.HttpContext;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
-import pl.edu.uw.dsk.dev.wallboard.LoginInfo;
-import pl.edu.uw.dsk.dev.wallboard.code_review.entites.ProjectStatus;
-import pl.edu.uw.dsk.dev.wallboard.exceptions.TechnicalException;
+import pl.edu.uw.dsk.dev.farel.exceptions.TechnicalException;
+import pl.edu.uw.dsk.dev.farel.information_source.continuous_integration.entities.BuildStatus;
+import pl.edu.uw.dsk.dev.farel.utils.ContextAwareHttpComponentsClientHttpRequestFactory;
+import pl.edu.uw.dsk.dev.farel.utils.HttpHostFactory;
+import pl.edu.uw.dsk.dev.farel.utils.LoginInfo;
 
-public class CodeReviewManager {
+public class JenkinsManager {
+ 
+    private static final Logger LOGGER = LoggerFactory.getLogger(JenkinsManager.class);
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CodeReviewManager.class);
+    private final String baseUrl;
+    private final String username;
+    private final String password;
 
-    private String baseUrl;
-    private String username;
-    private String password;
-
-    private RestTemplate restTemplate = new RestTemplate();
+    private RestTemplate restTemplate;
     private ObjectMapper json2ObjectMapper = new ObjectMapper();
-    private ProjectStatus projectStatus;
 
-    public CodeReviewManager(String baseUrl, LoginInfo loginInfo) {
+    public JenkinsManager(String baseUrl, LoginInfo loginInfo) {
+        this.baseUrl = baseUrl;
         this.username = loginInfo.getUsername();
         this.password = loginInfo.getPassword();
-        this.baseUrl = baseUrl;
+        this.restTemplate = createPreAuthenticatedRestTemplate();
     }
 
-    public ProjectStatus getStatus(String projectName) {
-        setupContext();
-        String codereviewStatus = restTemplate.getForObject(this.baseUrl + "a/projects/" + projectName, String.class);
-        codereviewStatus = removeMagicChars(codereviewStatus);
-        projectStatus = parseObjectInJson(codereviewStatus, ProjectStatus.class);
-        return projectStatus;
-    }
-    
-    private String removeMagicChars(String magicString) {
-        return magicString.substring(magicString.indexOf("{"));
+    public BuildStatus getStatus(String projectName) throws TechnicalException {
+        String jenkinsStatus = restTemplate.getForObject(this.baseUrl + "job/" + projectName + "/lastBuild/api/json",
+                        String.class);
+        return parseObjectInJson(jenkinsStatus, BuildStatus.class);
     }
 
-    private void setupContext() {
+    private RestTemplate createPreAuthenticatedRestTemplate() {
         CredentialsProvider credentialsProvider = createCredentialsProvider(username, password);
         HttpClient httpClient = HttpClientBuilder.create().setDefaultCredentialsProvider(credentialsProvider).build();
         ContextAwareHttpComponentsClientHttpRequestFactory customFactory = new ContextAwareHttpComponentsClientHttpRequestFactory(
                         httpClient);
         customFactory.setHttpContext(createHttpContext());
-        restTemplate = new RestTemplate(customFactory);
+        return new RestTemplate(customFactory);
     }
 
     private CredentialsProvider createCredentialsProvider(String username, String password) {
@@ -82,31 +75,13 @@ public class CodeReviewManager {
 
     private AuthCache createAuthCache() {
         AuthCache authCache = new BasicAuthCache();
-        DigestScheme digestAuth = new DigestScheme();
-        // digestAuth.overrideParamter("realm", "test");
-        // digestAuth.overrideParamter("nonce", "");
-        authCache.put(getTargetHost(), digestAuth);
+        BasicScheme basicAuth = new BasicScheme();
+        authCache.put(getTargetHost(), basicAuth);
         return authCache;
     }
 
     private HttpHost getTargetHost() {
-        return new HttpHost("adres.strony", 443, "https");
-    }
-
-    private class ContextAwareHttpComponentsClientHttpRequestFactory extends HttpComponentsClientHttpRequestFactory {
-        private HttpContext httpContext;
-
-        public ContextAwareHttpComponentsClientHttpRequestFactory(HttpClient httpClient) {
-            super(httpClient);
-        }
-
-        protected HttpContext createHttpContext(HttpMethod httpMethod, URI uri) {
-            return httpContext;
-        }
-
-        public void setHttpContext(HttpContext httpContext) {
-            this.httpContext = httpContext;
-        }
+        return HttpHostFactory.fromString(baseUrl);
     }
 
     public <T> T parseObjectInJson(String objectInJson, Class<T> objectClass) throws TechnicalException {
@@ -117,4 +92,5 @@ public class CodeReviewManager {
             throw new TechnicalException(e);
         }
     }
+
 }

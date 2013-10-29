@@ -3,12 +3,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>pl.edu.uw.dsk.dev</groupId>
-    <artifactId>wallboard</artifactId>
+    <artifactId>farel</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-
-    <name>rest</name>
-    <url>http://maven.apache.org</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -21,6 +18,9 @@
         <version.slf4j>1.7.5</version.slf4j>
         <version.commons-io>2.4</version.commons-io>
         <version.guava>15.0</version.guava>
+        <version.jbehave>3.8</version.jbehave>
+        <version.jodatime>2.3</version.jodatime>
+        <version.testng>6.8.7</version.testng>
     </properties>
 
     <dependencies>
@@ -67,6 +67,17 @@
             <artifactId>logback-classic</artifactId>
             <version>${version.logback}</version>
         </dependency>
+        <!-- ...Testing.................................................................... -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${version.testng}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jbehave</groupId>
+            <artifactId>jbehave-core</artifactId>
+            <version>${version.jbehave}</version>
+        </dependency>
         <!-- ...Commons.................................................................... -->
         <dependency>
             <groupId>commons-io</groupId>
@@ -81,7 +92,7 @@
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
-            <version>2.3</version>
+            <version>${version.jodatime}</version>
         </dependency>
     </dependencies>
 
