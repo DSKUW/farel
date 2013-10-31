@@ -1,4 +1,4 @@
-package pl.edu.uw.dsk.monitoring;
+package pl.edu.uw.dsk.dev.farel.itest;
 
 import java.util.Arrays;
 import java.util.List;

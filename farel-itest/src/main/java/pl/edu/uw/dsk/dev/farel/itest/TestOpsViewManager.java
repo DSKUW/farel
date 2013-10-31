@@ -1,4 +1,4 @@
-package pl.edu.uw.dsk.monitoring;
+package pl.edu.uw.dsk.dev.farel.itest;
 
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
