@@ -1,3 +1,10 @@
+Displaying projects
+
+Narrative:
+In order to see projects
+As a customer
+I want to be able to see projects
+
 Scenario: I am on project's display page
 
 Given that projects are defined within the system

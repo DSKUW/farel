@@ -4,9 +4,9 @@ import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.jbehave.core.steps.Steps;
-import org.testng.Assert;
+import org.junit.Assert;
 
-public class ProjectsVisibility extends Steps {
+public class ProjectsVisibilityTest extends Steps {
 
     @Given("that projects are defined within the $system")
     public void projectsExist(String system) {
