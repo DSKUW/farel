@@ -12,6 +12,7 @@ import org.jbehave.core.steps.InjectableStepsFactory;
 import org.jbehave.core.steps.InstanceStepsFactory;
 import org.junit.runner.RunWith;
 
+import pl.edu.uw.dsk.dev.farel.itest.stories.DisplayingProjectsStory;
 import de.codecentric.jbehave.junit.monitoring.JUnitReportingRunner;
 
 @RunWith(JUnitReportingRunner.class)
@@ -24,7 +25,7 @@ public class FarelIT extends JUnitStories {
 
     @Override
     protected List<String> storyPaths() {
-        return Arrays.asList("displayingProjects.story");
+        return Arrays.asList("stories/displayingProjects.story");
     }
 
     @Override

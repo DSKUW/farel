@@ -8,9 +8,14 @@
 
     <parent>
         <groupId>pl.edu.uw.dsk.dev</groupId>
-        <artifactId>farel</artifactId>
+        <artifactId>farel-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+
+    <properties>
+        <version.jaxrs>2.7.7</version.jaxrs>
+        <version.plugin.failsafe>2.16</version.plugin.failsafe>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -18,25 +23,8 @@
             <artifactId>farel-core</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <!-- ...Logging.................................................................... -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-        </dependency>
-        <!-- ...Testing.................................................................... -->
-        <dependency>
-            <groupId>org.jbehave</groupId>
-            <artifactId>jbehave-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>de.codecentric</groupId>
-            <artifactId>jbehave-junit-runner</artifactId>
-        </dependency>
-        <!-- ...RestTesting................................................................ -->
+
+        <!-- ...Rest Connected............................................................ -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
@@ -49,6 +37,39 @@
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-bundle</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>asm</groupId>
+            <artifactId>asm</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+            <version>${version.jaxrs}</version>
+        </dependency>
+
+        <!-- ...Logging.................................................................... -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+
+        <!-- ...Testing.................................................................... -->
+        <dependency>
+            <groupId>org.jbehave</groupId>
+            <artifactId>jbehave-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>jbehave-junit-runner</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -56,7 +77,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.16</version>
+                <version>${version.plugin.failsafe}</version>
                 <executions>
                     <execution>
                         <goals>

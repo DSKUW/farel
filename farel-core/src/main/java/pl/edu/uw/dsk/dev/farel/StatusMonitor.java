@@ -35,38 +35,34 @@ public class StatusMonitor {
     private static final String JIRA_PASSWORD = "password";
 
     public static void main(String[] args) throws TechnicalException, IOException {
-        opsView();
-        jenkins();
-        codeReview();
-        jira();
+        opsView("jenkins");
+        jenkins("probad-nightly");
+        codeReview("probad");
+        jira("PROBAD-13");
     }
 
-    private static void opsView() throws IOException {
+    private static void opsView(String hostName) throws IOException {
         LoginInfo opsViewLoginInfo = new LoginInfo(OPSVIEW_LOGIN, OPSVIEW_PASSWORD);
-        String hostName = "jenkins";
         OpsViewManager opsViewManager = new OpsViewManager(OPSVIEW_BASE_URL, opsViewLoginInfo);
         HostStatus hostStatus = opsViewManager.getStatus(hostName);
         LOGGER.info("OPSVIEW STATUS:\n" + hostStatus + "\n");
     }
 
-    private static void jenkins() throws IOException {
+    private static void jenkins(String projectName) throws IOException {
         LoginInfo jenkinsLoginInfo = new LoginInfo(JENKINS_LOGIN, JENKINS_PASSWORD);
-        String projectName = "probad-nightly";
         JenkinsManager jenkinsManager = new JenkinsManager(JENKINS_BASE_URL, jenkinsLoginInfo);
         BuildStatus projectStatus = jenkinsManager.getStatus(projectName);
         LOGGER.info("JENKINS STATUS:\n" + projectStatus + "\n");
     }
 
-    private static void codeReview() throws IOException {
+    private static void codeReview(String projectName) throws IOException {
         LoginInfo codeReviewLoginInfo = new LoginInfo(CODEREVIEW_LOGIN, CODEREVIEW_PASSWORD);
-        String projectName = "probad";
         CodeReviewManager codeReviewManager = new CodeReviewManager(CODEREVIEW_BASE_URL, codeReviewLoginInfo);
         LOGGER.info("CODEREVIEW STATUS:\n" + codeReviewManager.getStatus(projectName));
     }
 
-    private static void jira() throws IOException {
+    private static void jira(String ticketName) throws IOException {
         LoginInfo jiraLoginInfo = new LoginInfo(JIRA_LOGIN, JIRA_PASSWORD);
-        String ticketName = "PROBAD-13";
         JiraManager jiraManager = new JiraManager(JIRA_BASE_URL, jiraLoginInfo);
         LOGGER.info("CODEREVIEW STATUS:\n" + jiraManager.getStatus(ticketName));
     }

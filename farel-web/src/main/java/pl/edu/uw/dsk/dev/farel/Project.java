@@ -1,12 +1,11 @@
-package pl.edu.uw.dsk.dev.farel.itest.entities;
+package pl.edu.uw.dsk.dev.farel;
 
 public class Project {
-
-    private String name;
-
     public Project(String name) {
         this.name = name;
     }
+
+    String name;
 
     public String getName() {
         return name;

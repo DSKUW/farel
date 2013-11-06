@@ -3,13 +3,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>pl.edu.uw.dsk.dev</groupId>
-    <artifactId>farel</artifactId>
+    <artifactId>farel-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
         <module>farel-core</module>
         <module>farel-itest</module>
+        <module>farel-web</module>
     </modules>
 
     <properties>
@@ -26,9 +27,12 @@
         <version.guava>15.0</version.guava>
         <version.jbehave>3.8</version.jbehave>
         <version.jodatime>2.3</version.jodatime>
-        <version.system-rules>1.4.0</version.system-rules>
         <version.junit>4.11</version.junit>
+        <version.jersey>1.15</version.jersey>
+        <version.asm>3.3.1</version.asm>
         <version.jbehave-junit-runner>1.0.2</version.jbehave-junit-runner>
+
+        <version.plugin.maven-compiler>3.1</version.plugin.maven-compiler>
     </properties>
 
     <dependencyManagement>
@@ -54,17 +58,17 @@
                 <artifactId>httpclient</artifactId>
                 <version>${version.httpclient}</version>
             </dependency>
-            <!-- ...Jira Rest Java Client...................................................... -->
             <dependency>
-                <groupId>com.atlassian</groupId>
-                <artifactId>jrjc-core</artifactId>
-                <version>2.0.0-m25</version>
+                <groupId>com.sun.jersey</groupId>
+                <artifactId>jersey-bundle</artifactId>
+                <version>${version.jersey}</version>
             </dependency>
             <dependency>
-                <groupId>com.atlassian</groupId>
-                <artifactId>jrjc-api</artifactId>
-                <version>2.0.0-m25</version>
+                <groupId>asm</groupId>
+                <artifactId>asm</artifactId>
+                <version>${version.asm}</version>
             </dependency>
+
             <!-- ...Logging.................................................................... -->
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -76,17 +80,24 @@
                 <artifactId>logback-classic</artifactId>
                 <version>${version.logback}</version>
             </dependency>
+
             <!-- ...Testing.................................................................... -->
-            <dependency>
-                <groupId>org.testng</groupId>
-                <artifactId>testng</artifactId>
-                <version>${version.testng}</version>
-            </dependency>
             <dependency>
                 <groupId>org.jbehave</groupId>
                 <artifactId>jbehave-core</artifactId>
                 <version>${version.jbehave}</version>
             </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${version.junit}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>jbehave-junit-runner</artifactId>
+                <version>${version.jbehave-junit-runner}</version>
+            </dependency>
+
             <!-- ...Commons.................................................................... -->
             <dependency>
                 <groupId>commons-io</groupId>
@@ -94,30 +105,9 @@
                 <version>${version.commons-io}</version>
             </dependency>
             <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>${version.guava}</version>
-            </dependency>
-            <dependency>
                 <groupId>joda-time</groupId>
                 <artifactId>joda-time</artifactId>
                 <version>${version.jodatime}</version>
-            </dependency>
-            <!-- ...Teststing -->
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${version.junit}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.stefanbirkner</groupId>
-                <artifactId>system-rules</artifactId>
-                <version>${version.system-rules}</version>
-            </dependency>
-            <dependency>
-                <groupId>de.codecentric</groupId>
-                <artifactId>jbehave-junit-runner</artifactId>
-                <version>${version.jbehave-junit-runner}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -126,7 +116,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>${version.plugin.maven-compiler}</version>
                 <configuration>
                     <source>${version.java}</source>
                     <target>${version.java}</target>

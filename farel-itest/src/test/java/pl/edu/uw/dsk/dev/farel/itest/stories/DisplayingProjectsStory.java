@@ -1,11 +1,12 @@
-package pl.edu.uw.dsk.dev.farel.itest;
+package pl.edu.uw.dsk.dev.farel.itest.stories;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Assert;
+import javax.ws.rs.core.MultivaluedMap;
 
+import org.junit.Assert;
+import org.apache.cxf.jaxrs.impl.MetadataMap;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
@@ -24,26 +25,26 @@ public class DisplayingProjectsStory extends Steps {
     private static final Logger LOGGER = LoggerFactory.getLogger(DisplayingProjectsStory.class);
     private RestTemplate restTemplate = new RestTemplate();
     private ObjectMapper json2ObjectMapper = new ObjectMapper();
-    private List<Project> list;
+    private List<Project> projectList;
 
     @Given("that I defined projects within the system")
     public void projectsExist() {
-        List<Project> list = buildProjectList();
-        restTemplate.postForObject("http://localhost/rest/projects", list, String.class);
+        MultivaluedMap<String, Project> sourceProjectMap = buildProjectList();
+        restTemplate.postForObject("http://localhost/rest/projects", sourceProjectMap, Boolean.class);
     }
 
-    private List<Project> buildProjectList() {
-        List<Project> list = new ArrayList<Project>();
-        list.add(new Project("Test"));
-        list.add(new Project("Test2"));
-        list.add(new Project("Test3"));
-        return list;
+    private MultivaluedMap<String, Project> buildProjectList() {
+        MultivaluedMap<String, Project> sourceMap = new MetadataMap<String, Project>();
+        sourceMap.add("1", new Project("Test1"));
+        sourceMap.add("2", new Project("Test2"));
+        sourceMap.add("3", new Project("Test3"));
+        return sourceMap;
     }
 
     @When("I access the project list")
     public void listIsAccessed() {
         String projectListAsString = restTemplate.getForObject("http://localhost/rest/projects", String.class);
-        list = parseObjectInJson(projectListAsString, ProjectBean.class).toList();
+        projectList = parseObjectInJson(projectListAsString, ProjectBean.class).toList();
     }
 
     private <T> T parseObjectInJson(String objectInJson, Class<T> objectClass) throws TechnicalException {
@@ -57,8 +58,8 @@ public class DisplayingProjectsStory extends Steps {
 
     @Then("I see all projects defined in system")
     public void canSeeAllProjects() {
-        Assert.assertEquals(list.get(0).getName(), "Test");
-        Assert.assertEquals(list.get(1).getName(), "Test2");
-        Assert.assertEquals(list.get(2).getName(), "Test3");
+        Assert.assertEquals(projectList.get(0).getName(), "Test");
+        Assert.assertEquals(projectList.get(1).getName(), "Test2");
+        Assert.assertEquals(projectList.get(2).getName(), "Test3");
     }
 }
