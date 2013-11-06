@@ -13,6 +13,11 @@
     </parent>
 
     <dependencies>
+        <dependency>
+            <groupId>pl.edu.uw.dsk.dev</groupId>
+            <artifactId>farel-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!-- ...Logging.................................................................... -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -30,6 +35,19 @@
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>jbehave-junit-runner</artifactId>
+        </dependency>
+        <!-- ...RestTesting................................................................ -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.ws</groupId>
+            <artifactId>spring-ws-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
         </dependency>
     </dependencies>
 

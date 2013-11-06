@@ -19,12 +19,12 @@ public class FarelIT extends JUnitStories {
 
     @Override
     public InjectableStepsFactory stepsFactory() {
-        return new InstanceStepsFactory(configuration(), new ProjectsVisibilityTest());
+        return new InstanceStepsFactory(configuration(), new DisplayingProjectsStory());
     }
 
     @Override
     protected List<String> storyPaths() {
-        return Arrays.asList("story.story");
+        return Arrays.asList("displayingProjects.story");
     }
 
     @Override
