@@ -1,6 +1,6 @@
 package pl.edu.uw.dsk.dev.farel.itest;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jbehave.core.configuration.Configuration;
@@ -12,7 +12,8 @@ import org.jbehave.core.steps.InjectableStepsFactory;
 import org.jbehave.core.steps.InstanceStepsFactory;
 import org.junit.runner.RunWith;
 
-import pl.edu.uw.dsk.dev.farel.itest.stories.DisplayingProjectsStory;
+import pl.edu.uw.dsk.dev.farel.itest.stories.ProjectDisplayStory;
+import pl.edu.uw.dsk.dev.farel.itest.stories.RestStory;
 import de.codecentric.jbehave.junit.monitoring.JUnitReportingRunner;
 
 @RunWith(JUnitReportingRunner.class)
@@ -20,12 +21,22 @@ public class FarelIT extends JUnitStories {
 
     @Override
     public InjectableStepsFactory stepsFactory() {
-        return new InstanceStepsFactory(configuration(), new DisplayingProjectsStory());
+        return new InstanceStepsFactory(configuration(), storiesClasses());
+    }
+    
+    private List<Object> storiesClasses() {
+        List<Object> storiesClasses = new ArrayList<Object>();
+        storiesClasses.add(new RestStory());
+        storiesClasses.add(new ProjectDisplayStory());
+        return storiesClasses;
     }
 
     @Override
     protected List<String> storyPaths() {
-        return Arrays.asList("stories/displayingProjects.story");
+        List<String> storiesPaths = new ArrayList<String>();
+        storiesPaths.add("stories/restStory.story");
+        storiesPaths.add("stories/projectDisplayStory.story");
+        return storiesPaths;
     }
 
     @Override

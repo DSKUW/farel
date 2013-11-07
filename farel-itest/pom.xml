@@ -13,6 +13,7 @@
     </parent>
 
     <properties>
+        <version.selenium>3.5.5</version.selenium>
         <version.jaxrs>2.7.7</version.jaxrs>
         <version.plugin.failsafe>2.16</version.plugin.failsafe>
     </properties>
@@ -20,8 +21,15 @@
     <dependencies>
         <dependency>
             <groupId>pl.edu.uw.dsk.dev</groupId>
+            <artifactId>farel-model</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.edu.uw.dsk.dev</groupId>
             <artifactId>farel-core</artifactId>
             <version>${project.version}</version>
+            <type>war</type>
         </dependency>
 
         <!-- ...Rest Connected............................................................ -->
@@ -70,6 +78,11 @@
             <groupId>de.codecentric</groupId>
             <artifactId>jbehave-junit-runner</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.jbehave.web</groupId>
+            <artifactId>jbehave-web-selenium</artifactId>
+            <version>${version.selenium}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -80,12 +93,51 @@
                 <version>${version.plugin.failsafe}</version>
                 <executions>
                     <execution>
+                        <phase>integration-test</phase>
                         <goals>
                             <goal>integration-test</goal>
                             <goal>verify</goal>
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.4.5</version>
+                <executions>
+                    <execution>
+                        <id>start-container</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <container>
+                        <containerId>tomcat7x</containerId>
+                        <home>C:\apache-tomcat-7.0.47</home>
+                    </container>
+                    <deployables>
+                        <deployable>
+                            <groupId>pl.edu.uw.dsk.dev</groupId>
+                            <artifactId>farel-core</artifactId>
+                            <type>war</type>
+                            <properties>
+                                <context>rest</context>
+                            </properties>
+                        </deployable>
+                        <deployable>
+                            <groupId>pl.edu.uw.dsk.dev</groupId>
+                            <artifactId>farel-web</artifactId>
+                            <type>war</type>
+                            <properties>
+                                <context>ROOT</context>
+                            </properties>
+                        </deployable>
+                    </deployables>
+                </configuration>
             </plugin>
         </plugins>
     </build>

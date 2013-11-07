@@ -9,8 +9,9 @@
 
     <modules>
         <module>farel-core</module>
-        <module>farel-itest</module>
         <module>farel-web</module>
+        <module>farel-itest</module>
+        <module>farel-model</module>
     </modules>
 
     <properties>
@@ -86,16 +87,19 @@
                 <groupId>org.jbehave</groupId>
                 <artifactId>jbehave-core</artifactId>
                 <version>${version.jbehave}</version>
+                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${version.junit}</version>
+                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>de.codecentric</groupId>
                 <artifactId>jbehave-junit-runner</artifactId>
                 <version>${version.jbehave-junit-runner}</version>
+                <scope>test</scope>
             </dependency>
 
             <!-- ...Commons.................................................................... -->

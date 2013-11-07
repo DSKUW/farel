@@ -7,6 +7,6 @@ I want to be able to see projects
 
 Scenario: I am on project's display page
 
-Given that I defined projects within the system
+Given that projects are defined within the system
 When I access the project list
 Then I see all projects defined in system
