@@ -25,7 +25,7 @@ public class MyResource {
     }
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.TEXT_PLAIN)
     public String persistProjects(String jsonString) throws JsonGenerationException, JsonMappingException, IOException {
         PrintWriter writer = new PrintWriter("jsonString.json", "UTF-8");

@@ -39,4 +39,9 @@ public class WebConnector {
         LOGGER.info("Closing driver");
         driver.close();
     }
+
+    public void quit() {
+        LOGGER.info("Quitting");
+        driver.quit();
+    }
 }

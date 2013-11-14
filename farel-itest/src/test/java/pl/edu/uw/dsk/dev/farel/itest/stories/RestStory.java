@@ -23,13 +23,14 @@ public class RestStory extends Steps {
     private static final Logger LOGGER = LoggerFactory.getLogger(RestStory.class);
 
     private RestTemplate restTemplate = new RestTemplate();
-    private ObjectMapper json2ObjectMapper = new ObjectMapper();
+    private ObjectMapper jsonMapper = new ObjectMapper();
     private List<Project> returnedProjectList;
 
     @Given("that I define projects within the system")
-    public void projectsExist() {
+    public void projectsExist() throws IOException {
         List<Project> sourceProjectList = buildProjectList();
-        restTemplate.postForObject("http://localhost:8080/rest", sourceProjectList, String.class);
+        String jsonList = jsonMapper.writeValueAsString(sourceProjectList);
+        restTemplate.postForObject("http://localhost:8080/rest", jsonList, String.class);
     }
 
     private List<Project> buildProjectList() {
@@ -48,8 +49,8 @@ public class RestStory extends Steps {
 
     private <T> List<T> parseObjectInJson(String objectInJson, Class<T> objectClass) throws TechnicalException {
         try {
-            JavaType type = json2ObjectMapper.getTypeFactory().constructCollectionType(List.class, objectClass);
-            return json2ObjectMapper.readValue(objectInJson, type);
+            JavaType type = jsonMapper.getTypeFactory().constructCollectionType(List.class, objectClass);
+            return jsonMapper.readValue(objectInJson, type);
         } catch (IOException e) {
             LOGGER.error("Error durning parsing object of class '{}' from response '{}'", objectClass, objectInJson, e);
             throw new TechnicalException(e);

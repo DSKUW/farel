@@ -53,7 +53,6 @@ public class ProjectDisplayStory extends Steps {
     @Then("I see all projects defined in system")
     public void checkForVisibleProjects() {
         Assert.assertTrue(webConnector.isTextPresent("Test"));
-        webConnector.close();
-        
+        webConnector.quit();
     }
 }
