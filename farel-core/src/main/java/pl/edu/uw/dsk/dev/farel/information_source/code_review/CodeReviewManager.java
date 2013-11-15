@@ -21,8 +21,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestTemplate;
 
+import pl.edu.uw.dsk.dev.farel.entites.code_review.ProjectStatus;
 import pl.edu.uw.dsk.dev.farel.exceptions.TechnicalException;
-import pl.edu.uw.dsk.dev.farel.information_source.code_review.entities.ProjectStatus;
 import pl.edu.uw.dsk.dev.farel.utils.ContextAwareHttpComponentsClientHttpRequestFactory;
 import pl.edu.uw.dsk.dev.farel.utils.HttpHostFactory;
 import pl.edu.uw.dsk.dev.farel.utils.LoginInfo;

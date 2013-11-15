@@ -1,4 +1,4 @@
-package pl.edu.uw.dsk.dev.farel.information_source.bug_tracking.entities;
+package pl.edu.uw.dsk.dev.farel.entites.bug_tracking;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)

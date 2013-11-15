@@ -86,9 +86,9 @@
             <artifactId>jbehave-junit-runner</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.jbehave.web</groupId>
-            <artifactId>jbehave-web-selenium</artifactId>
-            <version>${version.selenium}</version>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>2.37.1</version>
         </dependency>
     </dependencies>
 

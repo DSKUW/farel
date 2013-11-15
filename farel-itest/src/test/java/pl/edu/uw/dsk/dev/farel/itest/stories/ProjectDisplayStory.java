@@ -1,58 +1,47 @@
 package pl.edu.uw.dsk.dev.farel.itest.stories;
 
-import java.io.IOException;
-import java.util.List;
-
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.JavaType;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.jbehave.core.annotations.BeforeStories;
+import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.steps.Steps;
 import org.junit.Assert;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestTemplate;
 
-import pl.edu.uw.dsk.dev.farel.entites.Project;
-import pl.edu.uw.dsk.dev.farel.exceptions.TechnicalException;
 import pl.edu.uw.dsk.dev.farel.itest.WebConnector;
 
 public class ProjectDisplayStory extends Steps {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProjectDisplayStory.class);
-
     private RestTemplate restTemplate = new RestTemplate();
-    private ObjectMapper json2ObjectMapper = new ObjectMapper();
-    private List<Project> returnedProjectList;
     private WebConnector webConnector;
 
-    @Given("that projects are defined within the system")
-    public void areProjectsDefined() {
-        String projectListAsString = restTemplate.getForObject("http://localhost:8080/rest", String.class);
-        returnedProjectList = parseObjectInJson(projectListAsString, Project.class);
-        Assert.assertNotNull(returnedProjectList);
+    @BeforeStories
+    public void setUp() {
+        webConnector = new WebConnector();
     }
 
-    private <T> List<T> parseObjectInJson(String objectInJson, Class<T> objectClass) throws TechnicalException {
-        try {
-            JavaType type = json2ObjectMapper.getTypeFactory().constructCollectionType(List.class, objectClass);
-            return json2ObjectMapper.readValue(objectInJson, type);
-        } catch (IOException e) {
-            LOGGER.error("Error durning parsing object of class '{}' from response '{}'", objectClass, objectInJson, e);
-            throw new TechnicalException(e);
-        }
+    @Given("that I define projects within the system")
+    public void areProjectsDefined() {
+        String jsonString = "{\"list\":[{\"services\":[{\"output\":\"DISK OK - free space: / 21028 MB (37% inode=92%): /dev 10 MB (100% inode=99%): /run 301 MB (99% inode=99%): /run/lock 5 MB (100% inode=99%): /run/shm 793 MB (100% inode=99%):\",\"name\":\"DISKSPACE\"},{\"output\":\"OK - load average: 0.12, 0.14, 0.14\",\"name\":\"LOAD\"},{\"output\":\"jest ok - free[mb]: ram(2231/3016 - 73%), swap(952/952 - 100%)\",\"name\":\"Memory and Swap\"},{\"output\":\"Sys: OK HD: OK HDWrn: OK Proc: OK Srv: OK NMon: OK OK\",\"name\":\"MONIT\"},{\"output\":\"PUPPET OK - state file is 0 minutes old: process running\",\"name\":\"Puppet Agent\"},{\"output\":\"HTTP OK: HTTP/1.1 200 OK - 7837 bytes in 0.024 second response time\",\"name\":\"Status - adres.strony\"}]}]}";
+        restTemplate.postForObject("http://localhost:8080/rest/test", jsonString, String.class);
     }
 
     @When("I access the project list")
     public void accessProjectList() {
-        webConnector = new WebConnector();
-        webConnector.open("http://localhost:8080");
+        webConnector.open("http://localhost:8080/test.html");
     }
 
     @Then("I see all projects defined in system")
     public void checkForVisibleProjects() {
-        Assert.assertTrue(webConnector.isTextPresent("Test"));
+        // act
+        boolean isTextVisible = webConnector.isTextPresent("name");
+        // assert
+        Assert.assertTrue(isTextVisible);
+    }
+
+    @AfterStories
+    public void tearDown() {
         webConnector.quit();
     }
 }

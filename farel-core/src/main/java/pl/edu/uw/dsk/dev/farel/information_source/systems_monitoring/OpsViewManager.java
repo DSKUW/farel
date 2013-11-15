@@ -13,9 +13,9 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import pl.edu.uw.dsk.dev.farel.entites.systems_monitoring.HostStatus;
+import pl.edu.uw.dsk.dev.farel.entites.systems_monitoring.OpsViewToken;
 import pl.edu.uw.dsk.dev.farel.exceptions.TechnicalException;
-import pl.edu.uw.dsk.dev.farel.information_source.systems_monitoring.entities.HostStatus;
-import pl.edu.uw.dsk.dev.farel.information_source.systems_monitoring.entities.OpsViewToken;
 import pl.edu.uw.dsk.dev.farel.utils.LoginInfo;
 
 public class OpsViewManager {

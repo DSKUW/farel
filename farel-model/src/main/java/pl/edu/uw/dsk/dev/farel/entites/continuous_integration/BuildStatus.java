@@ -1,4 +1,4 @@
-package pl.edu.uw.dsk.dev.farel.information_source.continuous_integration.entities;
+package pl.edu.uw.dsk.dev.farel.entites.continuous_integration;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 

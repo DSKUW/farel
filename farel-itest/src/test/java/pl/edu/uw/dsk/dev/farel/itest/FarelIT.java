@@ -13,7 +13,6 @@ import org.jbehave.core.steps.InstanceStepsFactory;
 import org.junit.runner.RunWith;
 
 import pl.edu.uw.dsk.dev.farel.itest.stories.ProjectDisplayStory;
-import pl.edu.uw.dsk.dev.farel.itest.stories.RestStory;
 import de.codecentric.jbehave.junit.monitoring.JUnitReportingRunner;
 
 @RunWith(JUnitReportingRunner.class)
@@ -26,7 +25,6 @@ public class FarelIT extends JUnitStories {
     
     private List<Object> storiesClasses() {
         List<Object> storiesClasses = new ArrayList<Object>();
-        storiesClasses.add(new RestStory());
         storiesClasses.add(new ProjectDisplayStory());
         return storiesClasses;
     }
@@ -34,7 +32,6 @@ public class FarelIT extends JUnitStories {
     @Override
     protected List<String> storyPaths() {
         List<String> storiesPaths = new ArrayList<String>();
-        storiesPaths.add("stories/restStory.story");
         storiesPaths.add("stories/projectDisplayStory.story");
         return storiesPaths;
     }

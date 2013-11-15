@@ -1,4 +1,4 @@
-package pl.edu.uw.dsk.dev.farel.information_source.code_review.entities;
+package pl.edu.uw.dsk.dev.farel.entites.code_review;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 

@@ -1,4 +1,4 @@
-package pl.edu.uw.dsk.dev.farel.information_source.systems_monitoring.entities;
+package pl.edu.uw.dsk.dev.farel.entites.systems_monitoring;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.joda.time.DateTime;

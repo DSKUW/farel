@@ -12,9 +12,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import pl.edu.uw.dsk.dev.farel.entites.bug_tracking.JiraSession;
+import pl.edu.uw.dsk.dev.farel.entites.bug_tracking.TicketEntity;
 import pl.edu.uw.dsk.dev.farel.exceptions.TechnicalException;
-import pl.edu.uw.dsk.dev.farel.information_source.bug_tracking.entities.JiraSession;
-import pl.edu.uw.dsk.dev.farel.information_source.bug_tracking.entities.TicketEntity;
 import pl.edu.uw.dsk.dev.farel.utils.LoginInfo;
 
 public class JiraManager {

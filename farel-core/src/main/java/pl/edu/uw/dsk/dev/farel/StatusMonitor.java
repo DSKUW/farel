@@ -5,13 +5,13 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pl.edu.uw.dsk.dev.farel.entites.continuous_integration.BuildStatus;
+import pl.edu.uw.dsk.dev.farel.entites.systems_monitoring.HostStatus;
 import pl.edu.uw.dsk.dev.farel.exceptions.TechnicalException;
 import pl.edu.uw.dsk.dev.farel.information_source.bug_tracking.JiraManager;
 import pl.edu.uw.dsk.dev.farel.information_source.code_review.CodeReviewManager;
 import pl.edu.uw.dsk.dev.farel.information_source.continuous_integration.JenkinsManager;
-import pl.edu.uw.dsk.dev.farel.information_source.continuous_integration.entities.BuildStatus;
 import pl.edu.uw.dsk.dev.farel.information_source.systems_monitoring.OpsViewManager;
-import pl.edu.uw.dsk.dev.farel.information_source.systems_monitoring.entities.HostStatus;
 import pl.edu.uw.dsk.dev.farel.utils.LoginInfo;
 
 public class StatusMonitor {

@@ -1,4 +1,4 @@
-package pl.edu.uw.dsk.dev.farel.information_source.systems_monitoring.entities;
+package pl.edu.uw.dsk.dev.farel.entites.systems_monitoring;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
@@ -11,7 +11,7 @@ public class HostStatus {
     public String toString() {
         StringBuilder appender = new StringBuilder();
         for (int i = 0; i < list[0].services.length; i++) {
-            appender = appender.append(list[0].services[i].name + ":::" + list[0].services[i].output + "\n");
+            appender.append(list[0].services[i].name).append(":::").append(list[0].services[i].output).append("\n");
         }
         return appender.toString();
     }
