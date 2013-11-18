@@ -1,9 +1,10 @@
-package pl.edu.uw.dsk.dev.farel.rest;
+package pl.edu.uw.dsk.dev.farel.rest.systems_monitoring;
 
 import java.io.IOException;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -16,20 +17,26 @@ import pl.edu.uw.dsk.dev.farel.information_source.systems_monitoring.OpsViewMana
 import pl.edu.uw.dsk.dev.farel.utils.LoginInfo;
 
 @Path("/opsview")
-public class OpsView {
+public class OpsViewControler {
 
     private static final String OPSVIEW_BASE_URL = "https://adres.strony/rest/";
     private static final String OPSVIEW_LOGIN = "login";
     private static final String OPSVIEW_PASSWORD = "password";
 
     private ObjectMapper jsonMapper = new ObjectMapper();
-
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String readProjects() throws JsonGenerationException, JsonMappingException, IOException {
+    public String generalInfo(@PathParam("projectId") String id) throws JsonGenerationException, JsonMappingException, IOException {
+        return "General info about Opsview";
+    }
+
+    @GET
+    @Path("{projectId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String projectInfo(@PathParam("projectId") String id) throws JsonGenerationException, JsonMappingException, IOException {
         LoginInfo opsViewLoginInfo = new LoginInfo(OPSVIEW_LOGIN, OPSVIEW_PASSWORD);
         OpsViewManager opsViewManager = new OpsViewManager(OPSVIEW_BASE_URL, opsViewLoginInfo);
-        HostStatus hostStatus = opsViewManager.getStatus("jenkins");
+        HostStatus hostStatus = opsViewManager.getStatus(id);
         return jsonMapper.writeValueAsString(hostStatus);
     }
 }

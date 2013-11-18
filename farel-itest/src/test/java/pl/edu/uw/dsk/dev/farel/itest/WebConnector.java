@@ -18,6 +18,7 @@ public class WebConnector {
     public WebConnector() {
         LOGGER.info("Initializing driver");
     }
+
     public void clickAndWait(String selector) {
         WebElement element = driver.findElement(By.id(selector));
         element.click();
@@ -27,14 +28,15 @@ public class WebConnector {
     public void open(String location) {
         LOGGER.info("Accessing page");
         driver.get(location);
-        //driver.manage().timeouts().implicitlyWait(DEFAULT_TIMEOUT_IN_MS, TimeUnit.MILLISECONDS);
+        // driver.manage().timeouts().implicitlyWait(DEFAULT_TIMEOUT_IN_MS,
+        // TimeUnit.MILLISECONDS);
     }
 
     public boolean isTextPresent(String text) {
         WebElement content = driver.findElement(By.tagName("body"));
         return content.getText().contains(text);
     }
-    
+
     public void close() {
         LOGGER.info("Closing driver");
         driver.close();
