@@ -65,6 +65,12 @@
             <groupId>asm</groupId>
             <artifactId>asm</artifactId>
         </dependency>
+        <!-- ...DataBase -->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>2.11.3</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>rest</finalName>
