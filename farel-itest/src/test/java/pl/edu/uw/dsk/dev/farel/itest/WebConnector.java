@@ -5,7 +5,6 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,9 +12,10 @@ public class WebConnector {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WebConnector.class);
     private final static long DEFAULT_TIMEOUT_IN_MS = 2000;
-    public WebDriver driver = new FirefoxDriver();
+    public WebDriver driver;
 
     public WebConnector() {
+        driver = WebDriverFactory.create();
         LOGGER.info("Initializing driver");
     }
 

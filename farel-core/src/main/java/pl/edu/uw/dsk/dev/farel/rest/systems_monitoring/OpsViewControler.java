@@ -62,6 +62,7 @@ public class OpsViewControler {
         if (null == hostStatus) {
             hostStatus = getNewRecord(id);
         }
+        
         return jsonMapper.writeValueAsString(hostStatus);
     }
 

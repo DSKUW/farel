@@ -22,7 +22,7 @@ public class FarelIT extends JUnitStories {
     public InjectableStepsFactory stepsFactory() {
         return new InstanceStepsFactory(configuration(), storiesClasses());
     }
-    
+
     private List<Object> storiesClasses() {
         List<Object> storiesClasses = new ArrayList<Object>();
         storiesClasses.add(new ProjectDisplayStory());
@@ -38,10 +38,7 @@ public class FarelIT extends JUnitStories {
 
     @Override
     public Configuration configuration() {
-        return new MostUsefulConfiguration()
-                .useStoryReporterBuilder(new StoryReporterBuilder()
-                .withDefaultFormats()
-                .withFormats(Format.CONSOLE, Format.TXT));
+        return new MostUsefulConfiguration().useStoryReporterBuilder(new StoryReporterBuilder().withDefaultFormats().withFormats(Format.CONSOLE, Format.TXT));
     }
 
 }
