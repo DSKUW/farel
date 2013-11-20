@@ -1,7 +1,7 @@
-package pl.edu.uw.dsk.dev.farel.itest;
+package pl.edu.uw.dsk.dev.farel.itest.browser_config;
 
 import pl.edu.uw.dsk.dev.farel.auxilliary.PropertiesHelper;
-import pl.edu.uw.dsk.dev.farel.itest.WebDriverFactory.SupportedBrowser;
+import pl.edu.uw.dsk.dev.farel.itest.browser_config.WebDriverFactory.SupportedBrowser;
 
 
 public class TestEnvironmentPropertiesHelper {

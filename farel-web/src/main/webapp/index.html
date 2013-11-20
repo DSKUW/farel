@@ -7,7 +7,7 @@
     function PostsCtrlAjax($scope, $http) {
         $http({
                         method : 'GET',
-                        url : 'rest/test'
+                        url : 'rest/projects'
         }).success(function(data) {
             $scope.list = data; // response data 
         });
@@ -17,7 +17,7 @@
 <body>
     <div id="ng-app" ng-app ng-controller="PostsCtrlAjax">
         <div ng-repeat="element in list">
-            {{element}}
+            {{element.name}}
         </div>
     </div>
 </body>

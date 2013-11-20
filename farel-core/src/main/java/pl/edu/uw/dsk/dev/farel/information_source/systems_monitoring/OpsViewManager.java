@@ -51,7 +51,7 @@ public class OpsViewManager {
             obtainToken();
             createAuthorizedRequest();
         }
-        ResponseEntity<String> response = restTemplate.exchange(baseUrl + "/status/service?host=" + hostName,
+        ResponseEntity<String> response = restTemplate.exchange(baseUrl + "status/service?host=" + hostName,
                         HttpMethod.GET, authorizedRequest, String.class);
         hostStatus = parseObjectInJson(response.getBody(), HostStatus.class);
         return hostStatus;

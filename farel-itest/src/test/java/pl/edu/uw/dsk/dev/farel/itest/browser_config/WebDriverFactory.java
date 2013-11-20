@@ -1,4 +1,4 @@
-package pl.edu.uw.dsk.dev.farel.itest;
+package pl.edu.uw.dsk.dev.farel.itest.browser_config;
 
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;

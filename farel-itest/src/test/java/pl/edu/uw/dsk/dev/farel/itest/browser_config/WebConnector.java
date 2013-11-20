@@ -1,4 +1,4 @@
-package pl.edu.uw.dsk.dev.farel.itest;
+package pl.edu.uw.dsk.dev.farel.itest.browser_config;
 
 import java.util.concurrent.TimeUnit;
 
@@ -34,7 +34,14 @@ public class WebConnector {
 
     public boolean isTextPresent(String text) {
         WebElement content = driver.findElement(By.tagName("body"));
-        return content.getText().contains(text);
+        String contentString = content.getText();
+        return contentString.contains(text);
+    }
+
+    public boolean isTextPresentAtId(String text, String id) {
+        WebElement content = driver.findElement(By.id(id));
+        String contentString = content.getText();
+        return contentString.contains(text);
     }
 
     public void close() {
@@ -46,4 +53,5 @@ public class WebConnector {
         LOGGER.info("Quitting");
         driver.quit();
     }
+
 }
