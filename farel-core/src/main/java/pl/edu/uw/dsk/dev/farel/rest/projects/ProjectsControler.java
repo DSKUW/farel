@@ -15,18 +15,18 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.type.TypeFactory;
 import org.codehaus.jackson.type.JavaType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.MongoTemplate;
 
 import pl.edu.uw.dsk.dev.farel.auxilliary.Project;
-
-import com.mongodb.MongoClient;
 
 @Path("/projects")
 public class ProjectsControler {
 
-    private ObjectMapper jsonMapper = new ObjectMapper();
-    private MongoOperations mongoOps = new MongoTemplate(new MongoClient(), "database");
+    @Autowired
+    private ObjectMapper jsonMapper;
+    @Autowired
+    private MongoOperations mongoOps;
 
     public ProjectsControler() throws UnknownHostException {
     }
