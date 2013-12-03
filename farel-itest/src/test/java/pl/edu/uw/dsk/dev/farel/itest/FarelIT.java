@@ -12,6 +12,7 @@ import org.jbehave.core.steps.InjectableStepsFactory;
 import org.jbehave.core.steps.InstanceStepsFactory;
 import org.junit.runner.RunWith;
 
+import pl.edu.uw.dsk.dev.farel.itest.stories.AdminAddsProjectStory;
 import pl.edu.uw.dsk.dev.farel.itest.stories.ProjectDisplayStory;
 import de.codecentric.jbehave.junit.monitoring.JUnitReportingRunner;
 
@@ -26,19 +27,24 @@ public class FarelIT extends JUnitStories {
     private List<Object> storiesClasses() {
         List<Object> storiesClasses = new ArrayList<Object>();
         storiesClasses.add(new ProjectDisplayStory());
+        storiesClasses.add(new AdminAddsProjectStory());
         return storiesClasses;
     }
 
     @Override
     protected List<String> storyPaths() {
+        //return new StoryFinder().findPaths("stories", "**/*.story", "");
         List<String> storiesPaths = new ArrayList<String>();
+        // TODO-mn: Niech się ładują stories automatycznie
         storiesPaths.add("stories/projectDisplayStory.story");
+        storiesPaths.add("stories/adminAddsProjectStory.story");
         return storiesPaths;
     }
 
     @Override
     public Configuration configuration() {
-        return new MostUsefulConfiguration().useStoryReporterBuilder(new StoryReporterBuilder().withDefaultFormats().withFormats(Format.CONSOLE, Format.TXT));
+        return new MostUsefulConfiguration().useStoryReporterBuilder(new StoryReporterBuilder()
+                        .withDefaultFormats().withFormats(Format.CONSOLE, Format.TXT));
     }
 
 }

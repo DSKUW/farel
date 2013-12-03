@@ -1,12 +1,13 @@
 package pl.edu.uw.dsk.dev.farel.entites.systems_monitoring;
 
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-import org.joda.time.DateTime;
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OpsViewToken {
 
-    private DateTime createdAt = new DateTime();
+    private Date createdAt = new Date();
     private String token;
 
     public String getToken() {
@@ -18,7 +19,7 @@ public class OpsViewToken {
     }
 
     public boolean isExpired() {
-        return createdAt.plusHours(1).isBeforeNow();
+        return createdAt.before(new Date(new Date().getTime() - 3600000));
     }
 
     public String toString() {

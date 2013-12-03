@@ -16,6 +16,9 @@
         <version.selenium>3.5.5</version.selenium>
         <version.jaxrs>2.7.7</version.jaxrs>
         <version.plugin.failsafe>2.16</version.plugin.failsafe>
+        <version.jul-to-slf4j>1.7.5</version.jul-to-slf4j>
+        <version.selenium-java>2.34.0</version.selenium-java>
+        <version.phantomjsdriver>1.0.4</version.phantomjsdriver>
     </properties>
 
     <dependencies>
@@ -44,14 +47,12 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-asl</artifactId>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
         </dependency>
-        <dependency>
-            <groupId>asm</groupId>
-            <artifactId>asm</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-frontend-jaxrs</artifactId>
@@ -63,14 +64,16 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
+
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jul-to-slf4j</artifactId>
-            <version>1.7.5</version>
+            <version>${version.jul-to-slf4j}</version>
             <scope>test</scope>
         </dependency>
 
@@ -79,20 +82,33 @@
             <groupId>org.jbehave</groupId>
             <artifactId>jbehave-core</artifactId>
         </dependency>
+
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>jbehave-junit-runner</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>2.34.0</version>
+            <version>${version.selenium-java}</version>
         </dependency>
+
         <dependency>
             <groupId>com.github.detro.ghostdriver</groupId>
             <artifactId>phantomjsdriver</artifactId>
-            <version>1.0.4</version>
+            <version>${version.phantomjsdriver}</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-mongodb</artifactId>
         </dependency>
     </dependencies>
 

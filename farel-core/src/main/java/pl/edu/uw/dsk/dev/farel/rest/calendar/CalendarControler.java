@@ -1,17 +1,15 @@
 package pl.edu.uw.dsk.dev.farel.rest.calendar;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-@Path("/calendar")
+//@Controller
+//@RequestMapping("/calendar")
 public class CalendarControler {
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public String readProjects(@PathParam("projectId") String id) {
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody String readProjects() {
         return "Calendar";
     }
 }

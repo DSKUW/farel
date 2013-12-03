@@ -1,19 +1,7 @@
 <!doctype html>
 <html lang="en" ng-app id="ng-app">
-<head>
-<title>Page Title</title>
-<script src="angular.js"></script>
-<script>
-    function PostsCtrlAjax($scope, $http) {
-        $http({
-                        method : 'GET',
-                        url : 'rest/projects'
-        }).success(function(data) {
-            $scope.list = data; // response data 
-        });
-    }
-</script>
-</head>
+<script src="JS/angular.js"></script>
+<script src="JS/index.js"></script>
 <body>
     <div id="ng-app" ng-app ng-controller="PostsCtrlAjax">
         <div ng-repeat="element in list">

@@ -3,7 +3,6 @@ package pl.edu.uw.dsk.dev.farel.information_source.bug_tracking;
 import java.io.IOException;
 import java.util.HashMap;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
@@ -16,6 +15,8 @@ import pl.edu.uw.dsk.dev.farel.entites.bug_tracking.JiraSession;
 import pl.edu.uw.dsk.dev.farel.entites.bug_tracking.TicketEntity;
 import pl.edu.uw.dsk.dev.farel.exceptions.TechnicalException;
 import pl.edu.uw.dsk.dev.farel.utils.LoginInfo;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JiraManager {
 

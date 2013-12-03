@@ -5,6 +5,9 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,9 +23,16 @@ public class WebConnector {
     }
 
     public void clickAndWait(String selector) {
+        waitUntil(500, ExpectedConditions.visibilityOf(driver.findElement(By.id(selector))));
         WebElement element = driver.findElement(By.id(selector));
         element.click();
         driver.manage().timeouts().implicitlyWait(DEFAULT_TIMEOUT_IN_MS, TimeUnit.MILLISECONDS);
+    }
+
+    public void fill(String id, String text) throws InterruptedException {
+        waitUntil(500, ExpectedConditions.visibilityOf(driver.findElement(By.id(id))));
+        WebElement content = driver.findElement(By.id(id));
+        content.sendKeys(text);
     }
 
     public void open(String location) {
@@ -42,6 +52,10 @@ public class WebConnector {
         WebElement content = driver.findElement(By.id(id));
         String contentString = content.getText();
         return contentString.contains(text);
+    }
+
+    private void waitUntil(long timeInSeconds, ExpectedCondition<?> conditions) {
+        new WebDriverWait(driver, timeInSeconds).until(conditions);
     }
 
     public void close() {

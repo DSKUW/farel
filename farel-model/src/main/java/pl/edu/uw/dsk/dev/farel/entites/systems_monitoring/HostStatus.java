@@ -1,6 +1,6 @@
 package pl.edu.uw.dsk.dev.farel.entites.systems_monitoring;
 
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class HostStatus {

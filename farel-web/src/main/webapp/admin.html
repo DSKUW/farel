@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en" ng-app id="ng-app">
+<script src="JS/angular.js"></script>
+<script src="JS/admin.js"></script>
+<body>
+    <div ng-controller="ProjectController">
+        <form novalidate class="simple-form">
+            Project Name: <input type="text" ng-model="project.name" id="nameField"/><br/>
+            <button ng-click="createProject()" id="addProject">CREATE</button>
+        </form>
+    </div>
+</body>
+</html>

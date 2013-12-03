@@ -4,21 +4,20 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.Date;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import pl.edu.uw.dsk.dev.farel.entites.systems_monitoring.HostStatus;
 import pl.edu.uw.dsk.dev.farel.information_source.systems_monitoring.OpsViewManager;
 import pl.edu.uw.dsk.dev.farel.utils.LoginInfo;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -26,7 +25,8 @@ import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
 import com.mongodb.util.JSON;
 
-@Path("/opsview")
+@Controller
+@RequestMapping("/opsview")
 public class OpsViewControler {
 
     private static final String OPSVIEW_BASE_URL = "https://adres.strony/rest/";
@@ -46,24 +46,20 @@ public class OpsViewControler {
 
     private ObjectMapper jsonMapper = new ObjectMapper();
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public String generalInfo(@PathParam("projectId") String id) throws JsonGenerationException, JsonMappingException,
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody String generalInfo() throws JsonGenerationException, JsonMappingException,
                     IOException {
         return "General info about Opsview";
     }
 
-    @GET
-    @Path("{projectId}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String projectInfo(@PathParam("projectId") String id) throws JsonGenerationException, JsonMappingException,
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/{projectId}")
+    public @ResponseBody HostStatus projectInfo(@PathVariable("projectId") String id) throws JsonGenerationException, JsonMappingException,
                     IOException {
         HostStatus hostStatus = getExistingRecord(id);
         if (null == hostStatus) {
             hostStatus = getNewRecord(id);
         }
-        
-        return jsonMapper.writeValueAsString(hostStatus);
+        return hostStatus;
     }
 
     private HostStatus getExistingRecord(String id) throws JsonParseException, JsonMappingException, IOException {

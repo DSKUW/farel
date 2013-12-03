@@ -2,7 +2,6 @@ package pl.edu.uw.dsk.dev.farel.information_source.systems_monitoring;
 
 import java.io.IOException;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
@@ -17,6 +16,8 @@ import pl.edu.uw.dsk.dev.farel.entites.systems_monitoring.HostStatus;
 import pl.edu.uw.dsk.dev.farel.entites.systems_monitoring.OpsViewToken;
 import pl.edu.uw.dsk.dev.farel.exceptions.TechnicalException;
 import pl.edu.uw.dsk.dev.farel.utils.LoginInfo;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class OpsViewManager {
 

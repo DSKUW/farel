@@ -1,6 +1,6 @@
 package pl.edu.uw.dsk.dev.farel.entites.code_review;
 
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ProjectStatus {

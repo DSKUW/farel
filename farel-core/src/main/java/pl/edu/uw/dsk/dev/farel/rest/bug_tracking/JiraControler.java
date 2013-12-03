@@ -1,24 +1,21 @@
 package pl.edu.uw.dsk.dev.farel.rest.bug_tracking;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-@Path("/jira")
+//@Controller
+//@RequestMapping("/jira")
 public class JiraControler {
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public String generalInfo() {
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody String generalInfo() {
         return "General info about Jira";
     }
     
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("{projectId}")
-    public String projectInfo(@PathParam("projectId") String id) {
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/{projectId}")
+    public @ResponseBody String projectInfo(@PathVariable("projectId") String id) {
         return "Informacje o stanie Jiry dla projektu o id=" + id;
     }
 }

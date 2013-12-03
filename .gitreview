@@ -1,0 +1,6 @@
+[gerrit]
+host=codereview.net.uw.edu.pl
+port=29418
+project=farel.git
+defaultbranch=master
+defaultremote=origin
