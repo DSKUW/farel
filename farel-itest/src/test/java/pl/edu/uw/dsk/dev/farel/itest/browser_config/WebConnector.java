@@ -23,14 +23,14 @@ public class WebConnector {
     }
 
     public void clickAndWait(String selector) {
-        waitUntil(500, ExpectedConditions.visibilityOf(driver.findElement(By.id(selector))));
+        waitUntil(2000, ExpectedConditions.visibilityOf(driver.findElement(By.id(selector))));
         WebElement element = driver.findElement(By.id(selector));
         element.click();
         driver.manage().timeouts().implicitlyWait(DEFAULT_TIMEOUT_IN_MS, TimeUnit.MILLISECONDS);
     }
 
     public void fill(String id, String text) throws InterruptedException {
-        waitUntil(500, ExpectedConditions.visibilityOf(driver.findElement(By.id(id))));
+        waitUntil(2000, ExpectedConditions.visibilityOf(driver.findElement(By.id(id))));
         WebElement content = driver.findElement(By.id(id));
         content.sendKeys(text);
     }

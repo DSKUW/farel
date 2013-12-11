@@ -54,7 +54,6 @@ public class ProjectsControler {
     @RequestMapping(value = "/{projectId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Project readProjects(@PathVariable("projectId") String id, UriComponentsBuilder builder) {
-        // TODO-mn: Zamienic response'a na ResponseEntity
         return mongoOps.findOne(new BasicQuery(new BasicDBObject("name", id)), Project.class, "project");
     }
 }

@@ -3,7 +3,7 @@ function ProjectController($scope, $http) {
         $http({
                         method : 'POST',
                         url : 'rest/projects',
-                        data : $scope.project
+                        data : [$scope.project]
         });
     };
 }

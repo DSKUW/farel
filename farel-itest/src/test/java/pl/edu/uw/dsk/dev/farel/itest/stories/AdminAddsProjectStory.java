@@ -8,16 +8,24 @@ import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.jbehave.core.steps.Steps;
 import org.junit.Assert;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import pl.edu.uw.dsk.dev.farel.auxilliary.Project;
-import pl.edu.uw.dsk.dev.farel.itest.browser_config.TestEnvironmentPropertiesHelper;
 import pl.edu.uw.dsk.dev.farel.itest.browser_config.WebConnector;
 
+@Component
 public class AdminAddsProjectStory extends Steps {
 
-    private RestTemplate restTemplate = new RestTemplate();
+    @Autowired
+    private RestTemplate restTemplate;
     private WebConnector webConnector;
+    
+    @Value("${farel.base_url}")
+    private String BASE_URL;
 
     private String name;
 
@@ -28,8 +36,7 @@ public class AdminAddsProjectStory extends Steps {
 
     @Given("that I access admin panel")
     public void accessAdminPanel() {
-        // TODO-mn: Server URL ze springa
-        String url = TestEnvironmentPropertiesHelper.serverUrl() + "admin.html";
+        String url = BASE_URL + "admin.html";
         webConnector.open(url);
     }
 
@@ -47,12 +54,12 @@ public class AdminAddsProjectStory extends Steps {
     @Then("project will be added to the system")
     public void callRestToAddToDb() {
         // act
-        // TODO-mn: Zamienic response'a na ResponseEntity
-        Project response = restTemplate.getForObject(
-                        TestEnvironmentPropertiesHelper.serverUrl() + "rest/projects/" + name,
-                        Project.class); 
+        @SuppressWarnings("unchecked")
+        ResponseEntity<Project> response = restTemplate.getForObject(
+                        BASE_URL + "rest/projects/" + name,
+                        ResponseEntity.class);
         //assert
-        Assert.assertTrue(response.getName().equals(name));
+        Assert.assertTrue(response.getBody().getName().equals(name));
     }
 
     @AfterStories
