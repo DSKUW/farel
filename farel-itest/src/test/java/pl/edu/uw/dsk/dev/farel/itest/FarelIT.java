@@ -10,25 +10,17 @@ import org.jbehave.core.junit.spring.SpringAnnotatedEmbedderRunner;
 import org.jbehave.core.reporters.Format;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.InjectableStepsFactory;
-import org.jbehave.core.steps.InstanceStepsFactory;
+import org.jbehave.core.steps.spring.SpringStepsFactory;
 import org.junit.runner.RunWith;
-
-import pl.edu.uw.dsk.dev.farel.itest.stories.AdminAddsProjectStory;
-import pl.edu.uw.dsk.dev.farel.itest.stories.ProjectDisplayStory;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 @RunWith(SpringAnnotatedEmbedderRunner.class)
 public class FarelIT extends JUnitStories {
 
     @Override
     public InjectableStepsFactory stepsFactory() {
-        return new InstanceStepsFactory(configuration(), storiesClasses());
-    }
-
-    private List<Object> storiesClasses() {
-        List<Object> storiesClasses = new ArrayList<Object>();
-        storiesClasses.add(new ProjectDisplayStory());
-        storiesClasses.add(new AdminAddsProjectStory());
-        return storiesClasses;
+        return new SpringStepsFactory(configuration(), new AnnotationConfigApplicationContext(ApplicationConfig.class));
+        //return new InstanceStepsFactory(configuration(), storiesClasses());
     }
 
     @Override

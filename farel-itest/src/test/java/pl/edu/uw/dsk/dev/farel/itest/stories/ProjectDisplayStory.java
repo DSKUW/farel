@@ -18,15 +18,14 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import pl.edu.uw.dsk.dev.farel.auxilliary.Project;
 import pl.edu.uw.dsk.dev.farel.exceptions.TechnicalException;
-import pl.edu.uw.dsk.dev.farel.itest.ApplicationConfig;
 import pl.edu.uw.dsk.dev.farel.itest.browser_config.WebConnector;
 
-@ContextConfiguration(classes = ApplicationConfig.class)
+@Component
 public class ProjectDisplayStory extends Steps {
 
     @Autowired

@@ -10,6 +10,8 @@ import org.jbehave.core.steps.Steps;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -54,10 +56,13 @@ public class AdminAddsProjectStory extends Steps {
     @Then("project will be added to the system")
     public void callRestToAddToDb() {
         // act
-        @SuppressWarnings("unchecked")
-        ResponseEntity<Project> response = restTemplate.getForObject(
+        ParameterizedTypeReference<Project> typeRef = new ParameterizedTypeReference<Project>() {
+        };
+        ResponseEntity<Project> response = restTemplate.exchange(
                         BASE_URL + "rest/projects/" + name,
-                        ResponseEntity.class);
+                        HttpMethod.GET,
+                        null,
+                        typeRef);
         //assert
         Assert.assertTrue(response.getBody().getName().equals(name));
     }
