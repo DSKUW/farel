@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.Date;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,8 +24,8 @@ import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
 import com.mongodb.util.JSON;
 
-@Controller
-@RequestMapping("/opsview")
+//@Controller
+//@RequestMapping("/opsview")
 public class OpsViewControler {
 
     private static final String OPSVIEW_BASE_URL = "https://adres.strony/rest/";

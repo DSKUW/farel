@@ -11,12 +11,15 @@ import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import pl.edu.uw.dsk.dev.farel.auxilliary.Project;
+import pl.edu.uw.dsk.dev.farel.entites.Project;
 import pl.edu.uw.dsk.dev.farel.itest.browser_config.WebConnector;
 
 @Component
@@ -25,14 +28,19 @@ public class AdminAddsProjectStory extends Steps {
     @Autowired
     private RestTemplate restTemplate;
     private WebConnector webConnector;
-    
+
     @Value("${farel.base_url}")
     private String BASE_URL;
 
     private String name;
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @BeforeStories
     public void setUp() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        restTemplate.exchange(BASE_URL + "rest/projects", HttpMethod.DELETE,
+                        new HttpEntity(headers), ResponseEntity.class);
         webConnector = new WebConnector();
     }
 
@@ -59,11 +67,8 @@ public class AdminAddsProjectStory extends Steps {
         ParameterizedTypeReference<Project> typeRef = new ParameterizedTypeReference<Project>() {
         };
         ResponseEntity<Project> response = restTemplate.exchange(
-                        BASE_URL + "rest/projects/" + name,
-                        HttpMethod.GET,
-                        null,
-                        typeRef);
-        //assert
+                        BASE_URL + "rest/projects/" + name, HttpMethod.GET, null, typeRef);
+        // assert
         Assert.assertTrue(response.getBody().getName().equals(name));
     }
 

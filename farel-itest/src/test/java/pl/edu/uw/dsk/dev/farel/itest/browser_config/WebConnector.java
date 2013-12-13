@@ -20,6 +20,10 @@ public class WebConnector {
     public WebConnector() {
         driver = WebDriverFactory.create();
         LOGGER.info("Initializing driver");
+//        DesiredCapabilities caps = DesiredCapabilities.phantomjs();
+//        LoggingPreferences logs = new LoggingPreferences();
+//        logs.enable(LogType.DRIVER, Level.INFO);
+//        caps.setCapability(CapabilityType.LOGGING_PREFS, logs);
     }
 
     public void clickAndWait(String selector) {

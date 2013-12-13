@@ -15,3 +15,8 @@ target/
 test-output/
 # SVN
 .svn/
+# ... IntelliJ IDEA
+.idea/
+*.iml
+# Scripts
+*.bat

@@ -15,13 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import pl.edu.uw.dsk.dev.farel.auxilliary.Project;
+import pl.edu.uw.dsk.dev.farel.entites.Project;
 import pl.edu.uw.dsk.dev.farel.exceptions.TechnicalException;
 import pl.edu.uw.dsk.dev.farel.itest.browser_config.WebConnector;
 
@@ -39,8 +41,13 @@ public class ProjectDisplayStory extends Steps {
                     "VALID_PROJECT_NAME_1"), new Project("VALID_PROJECT_NAME_2"), new Project(
                     "VALID_PROJECT_NAME_3"));
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @BeforeStories
     public void setUp() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        restTemplate.exchange(BASE_URL + "rest/projects", HttpMethod.DELETE,
+                        new HttpEntity(headers), ResponseEntity.class);
         webConnector = new WebConnector();
     }
 
@@ -48,8 +55,7 @@ public class ProjectDisplayStory extends Steps {
     public void defineProjects() throws TechnicalException, IOException {
         ParameterizedTypeReference<List<Project>> typeRef = new ParameterizedTypeReference<List<Project>>() {
         };
-        ResponseEntity<?> response = restTemplate.exchange(
-                        BASE_URL + "rest/projects",
+        ResponseEntity<?> response = restTemplate.exchange(BASE_URL + "rest/projects",
                         HttpMethod.POST, new HttpEntity<List<Project>>(PROJECT_LIST), typeRef);
         Assert.assertTrue(HttpStatus.CREATED.equals(response.getStatusCode()));
     }
