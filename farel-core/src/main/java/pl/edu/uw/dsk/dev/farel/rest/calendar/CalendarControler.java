@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class CalendarControler {
 
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public @ResponseBody String readProjects() {
+    public @ResponseBody
+    String readProjects() {
         return "Calendar";
     }
 }
