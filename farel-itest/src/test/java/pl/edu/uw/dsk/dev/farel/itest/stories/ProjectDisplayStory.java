@@ -55,7 +55,7 @@ public class ProjectDisplayStory extends Steps {
     public void defineProjects() throws TechnicalException, IOException {
         ParameterizedTypeReference<List<Project>> typeRef = new ParameterizedTypeReference<List<Project>>() {
         };
-        ResponseEntity<?> response = restTemplate.exchange(BASE_URL + "rest/projects",
+        ResponseEntity<?> response = restTemplate.exchange(BASE_URL + "rest/projects/addall",
                         HttpMethod.POST, new HttpEntity<List<Project>>(PROJECT_LIST), typeRef);
         Assert.assertTrue(HttpStatus.CREATED.equals(response.getStatusCode()));
     }
@@ -65,7 +65,7 @@ public class ProjectDisplayStory extends Steps {
         webConnector.open(BASE_URL);
     }
 
-    @Then("I see all projects defined in system")
+    @Then("I see all projects' information defined in system")
     public void checkForVisibleProjects() {
         // act
         boolean isTextVisible = true;

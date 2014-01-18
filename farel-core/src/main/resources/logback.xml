@@ -5,7 +5,11 @@
         </encoder>
     </appender>
 
+<!-- <logger name="example.foo" level="INFO" />
+  <logger name="example.foo.bar" level="DEBUG" /> -->
+
     <root level="ERROR">
         <appender-ref ref="STDOUT" />
+        <!-- <appender-ref ref="FILE" /> -->
     </root>
 </configuration>

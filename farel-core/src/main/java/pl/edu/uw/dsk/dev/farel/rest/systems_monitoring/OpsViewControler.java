@@ -28,9 +28,9 @@ import com.mongodb.util.JSON;
 //@RequestMapping("/opsview")
 public class OpsViewControler {
 
-    private static final String OPSVIEW_BASE_URL = "https://adres.strony/rest/";
-    private static final String OPSVIEW_LOGIN = "login";
-    private static final String OPSVIEW_PASSWORD = "password";
+    private static final String OPSVIEW_BASE_URL = "https://noc.uw.edu.pl/rest/";
+    private static final String OPSVIEW_LOGIN = "webmonitoring";
+    private static final String OPSVIEW_PASSWORD = "Lhh9XG1745erATaMP";
 
     private static MongoClient mongoClient;
     static {

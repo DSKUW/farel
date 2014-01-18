@@ -10,14 +10,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class JiraControler {
 
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public @ResponseBody
-    String generalInfo() {
+    public @ResponseBody String generalInfo() {
         return "General info about Jira";
     }
-
+    
     @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/{projectId}")
-    public @ResponseBody
-    String projectInfo(@PathVariable("projectId") String id) {
+    public @ResponseBody String projectInfo(@PathVariable("projectId") String id) {
         return "Informacje o stanie Jiry dla projektu o id=" + id;
     }
 }

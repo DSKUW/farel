@@ -1,6 +1,7 @@
 package pl.edu.uw.dsk.dev.farel.rest.projects;
 
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -28,27 +29,27 @@ public class ProjectsControler {
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<Project> findAll() {
+    public ResponseEntity<List<Project>> findAll() {
         List<Project> projects = projectRepository.findAll();
-        return projects;
+        return new ResponseEntity<List<Project>>(projects, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/addall", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Void> saveAll(@RequestBody List<Project> projectList,
                     UriComponentsBuilder builder) {
         UriComponents uri = builder.path("/projects").build();
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uri.toUri());
-        HttpStatus httpStatus = HttpStatus.CONFLICT;
+        HttpStatus httpStatus = HttpStatus.FORBIDDEN;
 
         boolean unique = true;
         for (Project project : projectList) {
-            if(null != readProject(project.getName())) {
+            if (null != readProject(project.getName())) {
                 unique = false;
             }
         }
-        if(unique) {
+        if (unique) {
             for (Project project : projectList) {
                 projectRepository.save(project);
             }
@@ -64,25 +65,46 @@ public class ProjectsControler {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{projectId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/{projectName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Project readProject(@PathVariable("projectId") String id) {
-        return projectRepository.findOneProjectByName(id);
+    public Project readProject(@PathVariable("projectName") String name) {
+        return projectRepository.findOneProjectByName(name);
     }
 
-    @RequestMapping(value = "/{projectId}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/{projectName}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<Void> submitProject(@PathVariable("projectId") String id, @RequestBody Project project,
-                    UriComponentsBuilder builder) {
-        UriComponents uri = builder.path("/projects/" + id).build();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(uri.toUri());
+    public ResponseEntity<Void> deleteProject(@PathVariable("projectName") String name) {
+        projectRepository.delete(projectRepository.findOneProjectByName(name));
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 
-        if(null == readProject(id)) {
+    @RequestMapping(value = "/{projectName}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<Void> updateProjectData(@PathVariable("projectName") String projectName,
+                    @RequestBody Project project, UriComponentsBuilder builder) {
+        if (null != readProject(project.getName())) {
             projectRepository.save(project);
+            UriComponents uri = builder.path("/projects/" + project.getName()).build();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setLocation(uri.toUri());
             return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
         } else {
-            return new ResponseEntity<Void>(headers, HttpStatus.FORBIDDEN);
+            return new ResponseEntity<Void>(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<Void> submitProject(@RequestBody Project project,
+                    UriComponentsBuilder builder) {
+        if (null == readProject(project.getName())) {
+            projectRepository.save(project);
+            UriComponents uri = builder.path("/projects/" + project.getName()).build();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setLocation(uri.toUri());
+            return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<Void>(HttpStatus.FORBIDDEN);
         }
     }
 }

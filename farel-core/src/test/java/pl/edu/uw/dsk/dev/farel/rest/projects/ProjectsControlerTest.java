@@ -6,7 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.mockito.Mockito;
@@ -46,61 +46,98 @@ public class ProjectsControlerTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void find() throws Exception {
+    public void whenGettingAllProjectsAllOfThemShoulBeReturned() throws Exception {
         // arrange
-        Project project = new Project("1", "farel");
-        Mockito.when(projectRepositoryMock.findOneProjectByName(project.getId())).thenReturn(
-                        project);
-
-        // act
-        ResultActions result = mockMvc.perform(get("/projects/1"));
-
-        // assert
-        result.andExpect(status().isOk()).andExpect(
-                        content().string("{\"id\":\"1\",\"name\":\"farel\"}"));
-    }
-
-    @Test
-    public void saveAll() throws Exception {
-        // act
-        ResultActions result = mockMvc.perform(post("/projects").contentType(
-                        MediaType.APPLICATION_JSON).content(
-                        "[{\"id\":null,\"name\":\"a\"},{\"id\":null,\"name\":\"b\"}]".getBytes()));
-
-        // assert
-        result.andExpect(status().isCreated()).andExpect(
-                        header().string("Location", "http://localhost/projects"));
-
-        Mockito.verify(projectRepositoryMock).save(new Project("a"));
-        Mockito.verify(projectRepositoryMock).save(new Project("b"));
-    }
-
-    @Test
-    public void noSave() throws Exception {
-        // arrange
-        Mockito.when(projectRepositoryMock.findOneProjectByName("a")).thenReturn(new Project("a"));
-
-        // act
-        ResultActions result = mockMvc.perform(post("/projects/a").contentType(
-                        MediaType.APPLICATION_JSON).content(
-                        "{\"id\":null,\"name\":\"a\"}".getBytes()));
-
-        // assert
-        result.andExpect(status().isForbidden())
-              .andExpect(header().string("Location", "http://localhost/projects/a"));
-    }
-
-    @Test
-    public void findAll() throws Exception {
-        // arrange
-        List<Project> projects = Arrays.asList(new Project("a"), new Project("b"));
-        Mockito.when(projectRepositoryMock.findAll()).thenReturn(projects);
-
+        List<Project> projectList = new ArrayList<Project>();
+        projectList.add(new Project("1", "test1"));
+        projectList.add(new Project("2", "test2"));
+        Mockito.when(projectRepositoryMock.findAll()).thenReturn(projectList);
         // act
         ResultActions result = mockMvc.perform(get("/projects"));
+
         // assert
         result.andExpect(status().isOk())
-                        .andExpect(content()
-                                        .string("[{\"id\":null,\"name\":\"a\"},{\"id\":null,\"name\":\"b\"}]"));
+                    .andExpect(content().string(
+                     "[{\"id\":\"1\",\"name\":\"test1\"},{\"id\":\"2\",\"name\":\"test2\"}]"));
+    }
+
+    @Test
+    public void whenPostingListOfNonExistingProjectsAllOfThemShouldBeAdded() throws Exception {
+        // arrange
+        Mockito.when(projectRepositoryMock.findOneProjectByName("test1")).thenReturn(null);
+        Mockito.when(projectRepositoryMock.findOneProjectByName("test2")).thenReturn(null);
+
+        // act
+        ResultActions result = mockMvc.perform(post("/projects/addall")
+                               .contentType(MediaType.APPLICATION_JSON)
+                               .content("[{\"id\":1,\"name\":\"test1\"},{\"id\":2,\"name\":\"test2\"}]"
+                               .getBytes()));
+
+        // assert
+        result.andExpect(status().isCreated()).andExpect(header().string("Location", "http://localhost/projects"));
+
+        Mockito.verify(projectRepositoryMock).save(new Project("1", "test1"));
+        Mockito.verify(projectRepositoryMock).save(new Project("2", "test2"));
+    }
+
+    @Test
+    public void whenPostingListOfAlreadyExistingProjectsAllOfThemShouldBeDiscarded()
+                    throws Exception {
+        // arrange
+        Mockito.when(projectRepositoryMock.findOneProjectByName("test1")).thenReturn(new Project("1", "test1"));
+        Mockito.when(projectRepositoryMock.findOneProjectByName("test2")).thenReturn(new Project("2", "test2"));
+
+        // act
+        ResultActions result = mockMvc.perform(post("/projects/addall")
+                               .contentType(MediaType.APPLICATION_JSON)
+                               .content("[{\"id\":1,\"name\":\"test1\"},{\"id\":2,\"name\":\"test2\"}]"
+                               .getBytes()));
+
+        // assert
+        result.andExpect(status().isForbidden());
+    }
+
+    @Test
+    public void shouldReturnProperProjectWhenItsUrlIsAccessed() throws Exception {
+        // arrange
+        Mockito.when(projectRepositoryMock.findOneProjectByName("test1")).thenReturn(new Project("1", "test1"));
+
+        // act
+        ResultActions result = mockMvc.perform(get("/projects/test1"));
+
+        // assert
+        result.andExpect(status().isOk()).andExpect(content().string("{\"id\":\"1\",\"name\":\"test1\"}"));
+    }
+
+    @Test
+    public void whenPostingOneProjectItShouldBeAddedIfItsNameIsNotInUseAlready() throws Exception {
+        // arrange
+        Mockito.when(projectRepositoryMock.findOneProjectByName("test1")).thenReturn(null);
+
+        // act
+        ResultActions result = mockMvc.perform(post("/projects").
+                        contentType(MediaType.APPLICATION_JSON).
+                        content("{\"id\":1,\"name\":\"test1\"}".
+                        getBytes()));
+
+        // assert
+        result.andExpect(status().isCreated()).andExpect(header().string("Location", "http://localhost/projects/test1"));
+
+        Mockito.verify(projectRepositoryMock).save(new Project("1", "test1"));
+    }
+
+    @Test
+    public void whenPostingOneProjectItShouldNotBeAddedIfItsNameIsInUseAlready() throws Exception {
+        // arrange
+        Mockito.when(projectRepositoryMock.findOneProjectByName("test1")).thenReturn(new Project("1", "test1"));
+
+        // act
+        ResultActions result = mockMvc.perform(post("/projects").
+                        contentType(MediaType.APPLICATION_JSON).
+                        content("{\"id\":1,\"name\":\"test1\"}".
+                        getBytes()));
+
+        // assert
+        result.andExpect(status().isForbidden());
     }
 }

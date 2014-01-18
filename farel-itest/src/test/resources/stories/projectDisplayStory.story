@@ -9,4 +9,4 @@ Scenario: I am on project's display page
 
 Given that I define projects within the system
 When I access the project list
-Then I see all projects defined in system
+Then I see all projects' information defined in system

@@ -1,4 +1,4 @@
-function PostsCtrlAjax($scope, $http) {
+function Controller($scope, $http) {
     $http({
                     method : 'GET',
                     url : 'rest/projects'

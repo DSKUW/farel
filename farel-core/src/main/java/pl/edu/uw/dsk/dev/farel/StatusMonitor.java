@@ -18,19 +18,19 @@ public class StatusMonitor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StatusMonitor.class);
 
-    private static final String OPSVIEW_BASE_URL = "https://adres.strony/rest/";
+    private static final String OPSVIEW_BASE_URL = "adres/rest";
     private static final String OPSVIEW_LOGIN = "login";
     private static final String OPSVIEW_PASSWORD = "password";
 
-    private static final String JENKINS_BASE_URL = "https://adres.strony/";
+    private static final String JENKINS_BASE_URL = "adres/rest";
     private static final String JENKINS_LOGIN = "login";
     private static final String JENKINS_PASSWORD = "password";
 
-    private static final String CODEREVIEW_BASE_URL = "https://adres.strony/";
+    private static final String CODEREVIEW_BASE_URL = "adres/rest";
     private static final String CODEREVIEW_LOGIN = "login";
     private static final String CODEREVIEW_PASSWORD = "password";
 
-    private static final String JIRA_BASE_URL = "https://adres.strony/rest/";
+    private static final String JIRA_BASE_URL = "adres/rest";
     private static final String JIRA_LOGIN = "login";
     private static final String JIRA_PASSWORD = "password";
 
