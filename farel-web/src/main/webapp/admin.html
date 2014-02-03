@@ -3,16 +3,17 @@
 <script src="JS/angular.js"></script>
 <script src="JS/admin.js"></script>
 <body>
-    <div ng-controller="AddController">
+    <div ng-controller="Controller">
         <form novalidate class="simple-form">
             Project Name: <input type="text" ng-model="project.name" id="nameField" />
             <button ng-click="createProject()" id="addProject">CREATE</button>
         </form>
     </div>
-    <div id="ng-app" ng-app ng-controller="DeleteController">
+    <div id="ng-app" ng-app ng-controller="Controller">
         <table ng-table="tableParams" class="table" border="1">
             <tr ng-repeat="element in list">
                 <td data-title="'Name'">{{element.name}}</td>
+                <td data-title="'Save'"><button ng-click="editProject(element)">EDIT</button></td>
                 <td data-title="'Delete'"><button ng-click="deleteProject(element.name)">DELETE</button></td>
             </tr>
         </table>
