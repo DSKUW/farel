@@ -20,19 +20,19 @@ function Controller($scope, $http) {
                         method : 'POST',
                         url : 'rest/projects',
                         data : $scope.project
-        });
-        $http({
-                        method : 'GET',
-                        url : 'rest/projects'
-        }).success(function(data) {
-            $scope.list = data;
-        });
+        }).success(function() {
+            window.location.replace("http://localhost:8080/admin.html");
+        }).error(function() {
+            alert("Project with this name already exists!");
+        });;
     };
 
     $scope.deleteProject = function(name) {
         $http({
                         method : 'DELETE',
                         url : 'rest/projects/' + name,
+        }).success(function() {
+            window.location.replace("http://localhost:8080/admin.html");
         });
     };
 
