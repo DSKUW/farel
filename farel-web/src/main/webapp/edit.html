@@ -4,10 +4,10 @@
 <script src="JS/admin.js"></script>
 <body>
     <form name="myForm" ng-controller="Controller">
-        Project {{chosenProject.name}} attributes: <br>
+        Project attributes: <br>
         <!--  chosenProject nie jest rozpoznawany jako zmienna ktora juz istniala, dodatkowo placeHolder traktowany jest dos³ownie -->
-        Name: <input type="text" placeholder="chosenProject.name" ng-model="chosenProject.name" id="nameField" />
-        <button ng-click="saveProject(chosenProject)" id="saveProject">SAVE</button>
+        Name: <input type="text" ng-model="finalProject.name" id="nameField" />
+        <button ng-click="saveProject(finalProject)" id="saveProject">SAVE</button>
     </form>
 </body>
 </html>
