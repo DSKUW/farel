@@ -2,11 +2,41 @@
 <html lang="en" ng-app id="ng-app">
 <script src="JS/angular.js"></script>
 <script src="JS/admin.js"></script>
-<body>
-    <form name="myForm" ng-controller="ProjectController">
-        Project attributes: <br>
-        Name: <input type="text" ng-model="finalProject.name" id="nameField" />
-        <button ng-click="save(finalProject)" id="saveProject">SAVE</button>
-    </form>
+<head>
+
+<title>Farel</title>
+
+</head>
+
+<body style="margin: 0px; padding: 0px; font-family: 'Trebuchet MS', verdana;">
+
+    <table width="100%" style="height: 100%;" cellpadding="10" cellspacing="0" border="0">
+        <tr>
+
+            <!-- ============ HEADER SECTION ============== -->
+            <td colspan="2" style="height: 100px;" bgcolor="#777d6a"><h1>Farel</h1></td>
+        </tr>
+
+        <tr>
+            <!-- ============ LEFT COLUMN (MENU) ============== -->
+            <td width="20%" valign="top" bgcolor="#999f8e"><a href="../../index.html"><h3>Home</h3></a> <a
+                href="../../admin.html"><h3>Admin</h3></a></td>
+
+            <!-- ============ RIGHT COLUMN (CONTENT) ============== -->
+            <td width="80%" valign="top" bgcolor="#d2d8c7">
+                <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+                <body>
+                    <form name="myForm" ng-controller="ProjectController">
+                        Project attributes: <br> Name: <input type="text" ng-model="finalProject.name" id="nameField" />
+                        <button ng-click="save(finalProject)" id="saveProject">SAVE</button>
+                    </form>
+                </body> <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+            </td>
+        </tr>
+        <!-- ============ FOOTER SECTION ============== -->
+        <tr>
+            <td colspan="2" align="center" height="2000" bgcolor="#777d6a"></td>
+        </tr>
+    </table>
 </body>
-</html>
+<html>
