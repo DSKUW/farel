@@ -12,7 +12,7 @@ function Controller($scope, $http) {
                     method : 'GET',
                     url : 'rest/projects'
     }).success(function(data) {
-        $scope.list = data; // response data
+        $scope.list = data;
     });
 
     $scope.createProject = function() {
@@ -20,27 +20,24 @@ function Controller($scope, $http) {
                         method : 'POST',
                         url : 'rest/projects',
                         data : $scope.project
-        });
-        $http({
-                        method : 'GET',
-                        url : 'rest/projects'
-        }).success(function(data) {
-            $scope.list = data;
-        });
+        }).success(function() {
+            location.reload();
+        }).error(function() {
+            alert("Project with this name already exists!");
+        });;
     };
 
     $scope.deleteProject = function(name) {
         $http({
                         method : 'DELETE',
                         url : 'rest/projects/' + name,
+        }).success(function() {
+            location.reload();
         });
     };
 
     $scope.editProject = function(project) {
-        // $rootScope.chosenProject = project;
-        // Nawet zadeklarowany w rootScopie nie jest widoczny z edit.html przez
-        // co nie dziala PUT
-        window.location.replace("http://localhost:8080/edit.html?id=" + project.id + "&name=" + project.name);
+       window.location.href = "../../edit.html?id=" + project.id + "&name=" + project.name;
     };
 
     $scope.saveProject = function(project) {
@@ -50,7 +47,7 @@ function Controller($scope, $http) {
                         url : 'rest/projects',
                         data : project
         }).success(function() {
-            window.location.replace("http://localhost:8080/admin.html");
+             window.location.href = "../../admin.html";
         }).error(function() {
             alert("Project with this name already exists!");
         });
