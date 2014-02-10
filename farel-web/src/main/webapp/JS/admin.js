@@ -1,4 +1,4 @@
-function Controller($scope, $http) {
+function ProjectController($scope, $http) {
 
     function getUrlVars() {
         var vars = {};
@@ -15,7 +15,7 @@ function Controller($scope, $http) {
         $scope.list = data;
     });
 
-    $scope.createProject = function() {
+    $scope.create = function() {
         $http({
                         method : 'POST',
                         url : 'rest/projects',
@@ -27,7 +27,7 @@ function Controller($scope, $http) {
         });;
     };
 
-    $scope.deleteProject = function(name) {
+    $scope.remove = function(name) {
         $http({
                         method : 'DELETE',
                         url : 'rest/projects/' + name,
@@ -36,11 +36,11 @@ function Controller($scope, $http) {
         });
     };
 
-    $scope.editProject = function(project) {
+    $scope.edit = function(project) {
        window.location.href = "../../edit.html?id=" + project.id + "&name=" + project.name;
     };
 
-    $scope.saveProject = function(project) {
+    $scope.save = function(project) {
         project.id = getUrlVars()["id"];
         $http({
                         method : 'POST',

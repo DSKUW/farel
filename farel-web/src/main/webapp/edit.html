@@ -3,11 +3,10 @@
 <script src="JS/angular.js"></script>
 <script src="JS/admin.js"></script>
 <body>
-    <form name="myForm" ng-controller="Controller">
+    <form name="myForm" ng-controller="ProjectController">
         Project attributes: <br>
-        <!--  chosenProject nie jest rozpoznawany jako zmienna ktora juz istniala, dodatkowo placeHolder traktowany jest dos³ownie -->
         Name: <input type="text" ng-model="finalProject.name" id="nameField" />
-        <button ng-click="saveProject(finalProject)" id="saveProject">SAVE</button>
+        <button ng-click="save(finalProject)" id="saveProject">SAVE</button>
     </form>
 </body>
 </html>
