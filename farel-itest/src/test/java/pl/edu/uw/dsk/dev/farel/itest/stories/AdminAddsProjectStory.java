@@ -46,7 +46,7 @@ public class AdminAddsProjectStory extends Steps {
 
     @Given("that I access admin panel")
     public void accessAdminPanel() {
-        String url = BASE_URL + "admin.html";
+        String url = BASE_URL + "admin_add.html";
         webConnector.open(url);
     }
 

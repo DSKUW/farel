@@ -24,10 +24,14 @@ function ProjectController($scope, $http) {
             location.reload();
         }).error(function() {
             alert("Project with this name already exists!");
-        });;
+        });
+        ;
     };
 
-    $scope.remove = function(name) {
+    var tempElement;
+
+    $scope.remove = function(element) {
+        tempElement = element;
         $http({
                         method : 'DELETE',
                         url : 'rest/projects/' + name,
@@ -36,8 +40,17 @@ function ProjectController($scope, $http) {
         });
     };
 
+    $scope.continueRemoval = function() {
+        $http({
+                        method : 'DELETE',
+                        url : 'rest/projects/' + tempElement.name,
+        }).success(function() {
+            location.reload();
+        });
+    };
+
     $scope.edit = function(project) {
-       window.location.href = "../../edit.html?id=" + project.id + "&name=" + project.name;
+        window.location.href = "../../edit.html?id=" + project.id + "&name=" + project.name;
     };
 
     $scope.save = function(project) {
@@ -47,7 +60,7 @@ function ProjectController($scope, $http) {
                         url : 'rest/projects',
                         data : project
         }).success(function() {
-             window.location.href = "../../admin.html";
+            window.location.href = "../../admin.html";
         }).error(function() {
             alert("Project with this name already exists!");
         });
