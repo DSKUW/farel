@@ -1,21 +1,36 @@
 <!doctype html>
 <html lang="en" ng-app id="ng-app">
 <link rel="stylesheet" href="CSS/simple.css" />
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
 <script src="JS/angular.js"></script>
 <script src="JS/admin.js"></script>
+<script src="JS/jquery-2.1.0.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
 
 <body>
     <div id="container">
         <div id="header">
             <h1>Farel</h1>
         </div>
-        <div id="navigation">
-            <ul>
-                <li><a href="../../index.html">List of projects</a></li>
-                <li><a href="../../admin.html">Admin panel</a></li>
-            </ul>
-        </div>
-
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a href="../../index.html">Overview</a></li>
+                        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin panel<b
+                                class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="../../admin_add.html">Add project</a></li>
+                                <!-- <li class="divider"></li> -->
+                                <li><a href="../../admin_manage.html">Manage projects</a></li>
+                            </ul></li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
         <div id="content">
             <form name="myForm" ng-controller="ProjectController">
                 Project attributes: <br> Name: <input type="text" ng-model="finalProject.name" id="nameField" />
