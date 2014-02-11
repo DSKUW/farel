@@ -16,11 +16,16 @@
             </ul>
         </div>
         <div id="content">
-
-            <div id="ng-app" ng-app ng-controller="Controller">
-                <div ng-repeat="element in list">{{element.name}}</div>
+            <div class="CSSTableGenerator" id="ng-app" ng-app ng-controller="Controller">
+                <table ng-table="tableParams" class="table" border="1">
+                    <tr>
+                        <th>Name</th>
+                    </tr>
+                    <tr ng-repeat="element in list">
+                        <td data-title="'Name'">{{element.name}}</td>
+                    </tr>
+                </table>
             </div>
-
         </div>
         <div id="footer">Copyright UW, 2014</div>
     </div>
