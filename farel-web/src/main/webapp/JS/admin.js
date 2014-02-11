@@ -60,7 +60,7 @@ function ProjectController($scope, $http) {
                         url : 'rest/projects',
                         data : project
         }).success(function() {
-            window.location.href = "../../admin.html";
+            window.location.href = "../../admin_manage.html";
         }).error(function() {
             alert("Project with this name already exists!");
         });
