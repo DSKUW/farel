@@ -33,22 +33,18 @@
             </div>
             <!-- /.container-fluid -->
         </nav>
-        <div id="content">
-            <div ng-controller="ServiceController">
-                <form novalidate class="simple-form">
-                    Service Name: <input type="text" ng-model="service.name" id="nameField" /> <br>
-                    Service Type:
-                    <select id="dropDownList">
-                        <option value=0>Bug Tracking</option>
-                        <option value=1>Code Review</option>
-                        <option value=2>Continuous Integration</option>
-                        <option value=3>Systems Monitoring</option>
-                    </select><br>
-                    Service URL: <input type="text" ng-model="service.address"/> <br>
-                    Service EndPoint: <input type="text" ng-model="service.restEndPoint" /> <br>
-                    <button ng-click="create()" id="addService">CREATE</button>
-                </form>
-            </div>
+        <div ng-controller="ServiceController">
+            <form novalidate class="simple-form">
+                Service Name: <input type="text" ng-model="service.name" id="nameField" /> <br> Service Type: <select
+                    id="dropDownList">
+                    <option value=0>Bug Tracking</option>
+                    <option value=1>Code Review</option>
+                    <option value=2>Continuous Integration</option>
+                    <option value=3>Systems Monitoring</option>
+                </select><br> Service URL: <input type="text" ng-model="service.address" /> <br> Service EndPoint: <input
+                    type="text" ng-model="service.restEndPoint" /> <br>
+                <button ng-click="create()" id="addService">CREATE</button>
+            </form>
         </div>
         <div id="footer">Copyright UW, 2014</div>
     </div>

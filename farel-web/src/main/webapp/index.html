@@ -33,17 +33,33 @@
             </div>
             <!-- /.container-fluid -->
         </nav>
-        <div id="content">
-            <div id="ng-app" ng-app ng-controller="Controller">
-                <table class="table table-striped">
-                    <tr>
-                        <th>Name</th>
-                    </tr>
-                    <tr ng-repeat="element in list">
-                        <td data-title="'Name'">{{element.name}}</td>
-                    </tr>
-                </table>
-            </div>
+        <h2>Projects</h2>
+        <div id="ng-app" ng-app ng-controller="Controller">
+            <table class="table table-striped">
+                <tr>
+                    <th>Name</th>
+                </tr>
+                <tr ng-repeat="element in list">
+                    <td data-title="'Name'">{{element.name}}</td>
+                </tr>
+            </table>
+        </div>
+        <h2>Services</h2>
+        <div id="ng-app" ng-app ng-controller="Controller">
+            <table class="table table-striped">
+                <tr>
+                    <th>Name</th>
+                    <th>Service Type</th>
+                    <th>Address</th>
+                    <th>Rest Endpoint</th>
+                </tr>
+                <tr ng-repeat="element in servicesList">
+                    <td data-title="'Name'">{{element.name}}</td>
+                    <td data-title="'ServiceType'">{{element.serviceType}}</td>
+                    <td data-title="'Address'">{{element.address}}</td>
+                    <td data-title="'RestEndPoint'">{{element.restEndPoint}}</td>
+                </tr>
+            </table>
         </div>
         <div id="footer">Copyright UW, 2014</div>
     </div>

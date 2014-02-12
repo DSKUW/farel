@@ -23,7 +23,7 @@ function ProjectController($scope, $http) {
         }).success(function() {
             location.reload();
         }).error(function() {
-            alert("Project with this name already exists!");
+            alert("Forbidden!");
         });
         ;
     };
@@ -47,21 +47,26 @@ function ProjectController($scope, $http) {
         window.location.href = "../../edit.html?id=" + project.id + "&name=" + project.name;
     };
 
-    $scope.save = function(project) {
-        project.id = getUrlVars()["id"];
+    $scope.save = function() {
+        if (typeof $scope.finalProject == 'undefined') {
+            window.location.href = "../../admin_manage.html";
+        }
+        $scope.finalProject.id = getUrlVars()["id"];
+        $scope.finalProject.name = document.getElementById('nameField').value;
         $http({
                         method : 'POST',
-                        url : 'rest/projects',
-                        data : project
+                        url : 'rest/projects/update',
+                        data : $scope.finalProject
         }).success(function() {
             window.location.href = "../../admin_manage.html";
         }).error(function() {
-            alert("Project with this name already exists!");
+            alert("Forbidden!");
         });
     };
 
     $(window).load(function() {
-        if(location.pathname=="/edit.html") document.getElementById("nameField").value = getUrlVars()["name"];
+        if (location.pathname == "/edit.html")
+            document.getElementById("nameField").value = getUrlVars()["name"];
     });
 }
 
@@ -94,7 +99,7 @@ function ServiceController($scope, $http) {
         }).success(function() {
             location.reload();
         }).error(function() {
-            alert("Project with this name already exists!");
+            alert("Forbidden!");
         });
         ;
     };
@@ -102,13 +107,13 @@ function ServiceController($scope, $http) {
     var serviceTempElement;
 
     $scope.remove = function(element) {
-        tempElement = element;
+        serviceTempElement = element;
     };
 
     $scope.continueRemoval = function() {
         $http({
                         method : 'DELETE',
-                        url : 'rest/projects/' + serviceTempElement.name,
+                        url : 'rest/services/' + serviceTempElement.name,
         }).success(function() {
             location.reload();
         });
@@ -119,38 +124,44 @@ function ServiceController($scope, $http) {
                         + service.serviceType + "&address=" + service.address + "&restEndPoint=" + service.restEndPoint;
     };
 
-    $scope.save = function(service) {
+    $scope.save = function() {
+        if (typeof $scope.finalSrvice == 'undefined') {
+            window.location.href = "../../admin_manage_services.html";
+        }
+        $scope.finalSrvice.id = getUrlVars()["id"];
+        $scope.finalSrvice.name = document.getElementById('nameField').value;
+        $scope.finalSrvice.address = document.getElementById('address').value;
+        $scope.finalSrvice.restEndPoint = document.getElementById('endPoint').value;
         var e = document.getElementById("dropDownList");
         var chosen = e.options[e.selectedIndex].value;
-        service.serviceType = ServiceType[chosen];
-        service.id = getUrlVars()["id"];
+        $scope.finalSrvice.serviceType = ServiceType[chosen];
         $http({
                         method : 'POST',
-                        url : 'rest/services',
-                        data : service
+                        url : 'rest/services/update',
+                        data : $scope.finalSrvice
         }).success(function() {
             window.location.href = "../../admin_manage_services.html";
         }).error(function() {
-            alert("Project with this name already exists!");
+            alert("Forbidden!");
         });
     };
-    
+
     $(window).load(function() {
-        if(location.pathname=="/edit_services.html") {
+        if (location.pathname == "/edit_services.html") {
             document.getElementById("nameField").value = getUrlVars()["name"];
             document.getElementById("address").value = getUrlVars()["address"];
             document.getElementById("endPoint").value = getUrlVars()["restEndPoint"];
-            if(getUrlVars()["serviceType"] == "BUG_TRACKING") {
+            if (getUrlVars()["serviceType"] == "BUG_TRACKING") {
+                document.getElementById("dropDownList").selectedIndex = 0;
+            }
+            if (getUrlVars()["serviceType"] == "CODE_REVIEW") {
                 document.getElementById("dropDownList").selectedIndex = 1;
             }
-            if(getUrlVars()["serviceType"] == "CODE_REVIEW") {
+            if (getUrlVars()["serviceType"] == "CONTINUOUS_INTEGRATION") {
                 document.getElementById("dropDownList").selectedIndex = 2;
             }
-            if(getUrlVars()["serviceType"] == "CONTINUOUS_INTEGRATION") {
+            if (getUrlVars()["serviceType"] == "SYSTEMS_MONITORING") {
                 document.getElementById("dropDownList").selectedIndex = 3;
-            }
-            if(getUrlVars()["serviceType"] == "SYSTEMS_MONITORING") {
-                document.getElementById("dropDownList").selectedIndex = 4;
             }
         }
     });

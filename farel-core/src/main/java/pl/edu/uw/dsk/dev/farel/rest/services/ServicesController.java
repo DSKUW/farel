@@ -77,6 +77,7 @@ public class ServicesController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
+    /* obecnie nie uzywany, wywolanie PUT'a nie dzialalo w JS'ie */
     @RequestMapping(value = "/{serviceName}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<Void> updateProjectData(@PathVariable("serviceName") String serviceName,
@@ -96,9 +97,24 @@ public class ServicesController {
     @ResponseBody
     public ResponseEntity<Void> submitProject(@RequestBody Service service,
                     UriComponentsBuilder builder) {
-        if (null == readService(service.getName())) {
+        if ((null == readService(service.getName())) && !service.getName().equals("")) {
             serviceRepository.save(service);
             UriComponents uri = builder.path("/services/" + service.getName()).build();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setLocation(uri.toUri());
+            return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<Void>(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<Void> updateProject(@RequestBody Service service,
+                    UriComponentsBuilder builder) {
+        if (!service.getName().equals("")) {
+            serviceRepository.save(service);
+            UriComponents uri = builder.path("/services/update/" + service.getName()).build();
             HttpHeaders headers = new HttpHeaders();
             headers.setLocation(uri.toUri());
             return new ResponseEntity<Void>(headers, HttpStatus.CREATED);

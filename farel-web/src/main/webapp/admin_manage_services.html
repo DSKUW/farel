@@ -33,43 +33,40 @@
             </div>
             <!-- /.container-fluid -->
         </nav>
-        <div id="content">
-            <div id="ng-app" ng-app ng-controller="ServiceController">
-                <table class="table table-striped">
-                    <tr>
-                        <th>Name</th>
-                        <th>Service Type</th>
-                        <th>Address</th>
-                        <th>Rest Endpoint</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                    </tr>
-                    <tr ng-repeat="element in serviceList">
-                        <td data-title="'Name'">{{element.name}}</td>
-                        <td data-title="'ServiceType'">{{element.serviceType}}</td>
-                        <td data-title="'Address'">{{element.address}}</td>
-                        <td data-title="'RestEndPoint'">{{element.restEndPoint}}</td>
-                        <td data-title="'Save'"><button ng-click="edit(element)">EDIT</button></td>
-                        <td data-title="'Delete'"><button ng-click="remove(element)" data-toggle="modal"
-                                data-target="#myModal">DELETE</button></td>
+        <div id="ng-app" ng-app ng-controller="ServiceController">
+            <table class="table table-striped">
+                <tr>
+                    <th>Name</th>
+                    <th>Service Type</th>
+                    <th>Address</th>
+                    <th>Rest Endpoint</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                <tr ng-repeat="element in serviceList">
+                    <td data-title="'Name'">{{element.name}}</td>
+                    <td data-title="'ServiceType'">{{element.serviceType}}</td>
+                    <td data-title="'Address'">{{element.address}}</td>
+                    <td data-title="'RestEndPoint'">{{element.restEndPoint}}</td>
+                    <td data-title="'Save'"><button ng-click="edit(element)">EDIT</button></td>
+                    <td data-title="'Delete'"><button ng-click="remove(element)" data-toggle="modal" data-target="#myModal">DELETE</button></td>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-body">
-                                        Are you sure? <br>
-                                        <button data-dismiss="modal">Cancel</button>
-                                        <button ng-click="continueRemoval()">Delete</button>
-                                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    Are you sure? <br>
+                                    <button data-dismiss="modal">Cancel</button>
+                                    <button ng-click="continueRemoval()">Delete</button>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                    </tr>
-                </table>
-            </div>
+                </tr>
+            </table>
         </div>
         <div id="footer">Copyright UW, 2014</div>
     </div>

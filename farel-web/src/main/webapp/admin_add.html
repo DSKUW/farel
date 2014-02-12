@@ -33,13 +33,11 @@
             </div>
             <!-- /.container-fluid -->
         </nav>
-        <div id="content">
-            <div ng-controller="ProjectController">
-                <form novalidate class="simple-form">
-                    Project Name: <input type="text" ng-model="project.name" id="nameField" />
-                    <button ng-click="create()" id="addProject">CREATE</button>
-                </form>
-            </div>
+        <div ng-controller="ProjectController">
+            <form novalidate class="simple-form">
+                Project Name: <input type="text" ng-model="project.name" id="nameField" />
+                <button ng-click="create()" id="addProject">CREATE</button>
+            </form>
         </div>
         <div id="footer">Copyright UW, 2014</div>
     </div>

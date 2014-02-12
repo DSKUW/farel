@@ -1,9 +1,14 @@
 package pl.edu.uw.dsk.dev.farel.entites;
 
+import org.springframework.data.annotation.Id;
+
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public class Service {
-    String name;
+
+    @Id
+    private String id;
+    private String name;
 
     public enum ServiceType {
         BUG_TRACKING("BUG_TRACKING"), CODE_REVIEW("CODE_REVIEW"), CONTINUOUS_INTEGRATION(
@@ -21,10 +26,28 @@ public class Service {
         }
     }
 
-    ServiceType serviceType;
+    private ServiceType serviceType;
 
-    String address;
-    String restEndPoint;
+    private String address;
+    private String restEndPoint;
+
+    public Service() { }
+
+    public Service(String name, ServiceType serviceType, String address, String restEndPoint) {
+        this.name = name;
+        this.serviceType = serviceType;
+        this.address = address;
+        this.restEndPoint = restEndPoint;
+    }
+
+    public Service(String id, String name, ServiceType serviceType, String address, String restEndPoint) {
+        this(name, serviceType, address, restEndPoint);
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
