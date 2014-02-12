@@ -5,11 +5,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public class Service {
     String name;
 
-    enum ServiceType {
-        BUG_TRACKING("BUG_TRACKING"), 
-        CODE_REVIEW("CODE_REVIEW"), 
-        CONTINUOUS_INTEGRATION("CONTINUOUS_INTEGRATION"),
-        SYSTEMS_MONITORING("SYSTEMS_MONITORING");
+    public enum ServiceType {
+        BUG_TRACKING("BUG_TRACKING"), CODE_REVIEW("CODE_REVIEW"), CONTINUOUS_INTEGRATION(
+                        "CONTINUOUS_INTEGRATION"), SYSTEMS_MONITORING("SYSTEMS_MONITORING");
 
         String stringValue;
 
@@ -32,7 +30,7 @@ public class Service {
         return name;
     }
 
-    public ServiceType getType() {
+    public ServiceType getServiceType() {
         return serviceType;
     }
 

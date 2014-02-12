@@ -34,16 +34,16 @@
             <!-- /.container-fluid -->
         </nav>
         <div id="content">
-            <form name="myForm" ng-controller="ProjectService">
-                Service Name: <input type="text" ng-model="service.name" id="nameField" /> <br> Service Type: 
-                <select id="dropDownList">
+            <form name="myForm" ng-controller="ServiceController">
+                Service Name: <input type="text" ng-model="service.name" id="nameField" /> <br> Service Type: <select
+                    id="dropDownList">
                     <option value=0>Bug Tracking</option>
                     <option value=1>Code Review</option>
                     <option value=2>Continuous Integration</option>
                     <option value=3>Systems Monitoring</option>
-                </select><br> Service URL: <input type="text" ng-model="service.address" id="address"/> <br> Service EndPoint: <input
-                    type="text" ng-model="service.restEndPoint" id="endPoint"/> <br>
-                <button ng-click="create()" id="addService">CREATE</button>
+                </select><br> Service URL: <input type="text" ng-model="service.address" id="address" /> <br> Service EndPoint:
+                <input type="text" ng-model="service.restEndPoint" id="endPoint" /> <br>
+                <button ng-click="save(service)" id="addService">SAVE</button>
             </form>
         </div>
 

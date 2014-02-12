@@ -87,7 +87,6 @@ function ServiceController($scope, $http) {
         var e = document.getElementById("dropDownList");
         var chosen = e.options[e.selectedIndex].value;
         $scope.service.serviceType = ServiceType[chosen];
-        alert(JSON.stringify($scope.service));
         $http({
                         method : 'POST',
                         url : 'rest/services',
