@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="CSS/simple.css" />
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
 <script src="JS/angular.js"></script>
-<script src="JS/index.js"></script>
+<script src="JS/admin.js"></script>
 <script src="JS/jquery-2.1.0.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
 
@@ -34,13 +34,39 @@
             <!-- /.container-fluid -->
         </nav>
         <div id="content">
-            <div id="ng-app" ng-app ng-controller="Controller">
+            <div id="ng-app" ng-app ng-controller="ServiceController">
                 <table class="table table-striped">
                     <tr>
                         <th>Name</th>
+                        <th>Service Type</th>
+                        <th>Address</th>
+                        <th>Rest Endpoint</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
                     </tr>
-                    <tr ng-repeat="element in list">
+                    <tr ng-repeat="element in serviceList">
                         <td data-title="'Name'">{{element.name}}</td>
+                        <td data-title="'ServiceType'">{{element.serviceType}}</td>
+                        <td data-title="'Address'">{{element.address}}</td>
+                        <td data-title="'RestEndPoint'">{{element.restEndPoint}}</td>
+                        <td data-title="'Save'"><button ng-click="edit(element)">EDIT</button></td>
+                        <td data-title="'Delete'"><button ng-click="remove(element)" data-toggle="modal"
+                                data-target="#myModal">DELETE</button></td>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        Are you sure? <br>
+                                        <button data-dismiss="modal">Cancel</button>
+                                        <button ng-click="continueRemoval()">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </tr>
                 </table>
             </div>

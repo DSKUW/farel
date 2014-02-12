@@ -1,4 +1,4 @@
-package pl.edu.uw.dsk.dev.farel.rest.projects;
+package pl.edu.uw.dsk.dev.farel.rest.services;
 
 import java.util.List;
 
@@ -16,41 +16,41 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import pl.edu.uw.dsk.dev.farel.entites.Project;
-import pl.edu.uw.dsk.dev.farel.repository.ProjectRepository;
+import pl.edu.uw.dsk.dev.farel.entites.Service;
+import pl.edu.uw.dsk.dev.farel.repository.ServiceRepository;
 
 @Controller
-@RequestMapping(value = "/projects")
-public class ProjectsControler {
+@RequestMapping(value = "/services")
+public class ServicesController {
 
     @Autowired
-    private ProjectRepository projectRepository;
+    private ServiceRepository serviceRepository;
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<List<Project>> findAll() {
-        List<Project> projects = projectRepository.findAll();
-        return new ResponseEntity<List<Project>>(projects, HttpStatus.OK);
+    public ResponseEntity<List<Service>> findAll() {
+        List<Service> services = serviceRepository.findAll();
+        return new ResponseEntity<List<Service>>(services, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/addall", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<Void> saveAll(@RequestBody List<Project> projectList,
+    public ResponseEntity<Void> saveAll(@RequestBody List<Service> serviceList,
                     UriComponentsBuilder builder) {
-        UriComponents uri = builder.path("/projects").build();
+        UriComponents uri = builder.path("/services").build();
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uri.toUri());
         HttpStatus httpStatus = HttpStatus.FORBIDDEN;
 
         boolean unique = true;
-        for (Project project : projectList) {
-            if (null != readProject(project.getName())) {
+        for (Service service : serviceList) {
+            if (null != readService(service.getName())) {
                 unique = false;
             }
         }
         if (unique) {
-            for (Project project : projectList) {
-                projectRepository.save(project);
+            for (Service service : serviceList) {
+                serviceRepository.save(service);
             }
             httpStatus = HttpStatus.CREATED;
         }
@@ -60,30 +60,30 @@ public class ProjectsControler {
     @RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<Void> deleteAll() {
-        projectRepository.deleteAll();
+        serviceRepository.deleteAll();
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{projectName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/{serviceName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Project readProject(@PathVariable("projectName") String name) {
-        return projectRepository.findOneProjectByName(name);
+    public Service readService(@PathVariable("serviceName") String name) {
+        return serviceRepository.findOneServiceByName(name);
     }
 
-    @RequestMapping(value = "/{projectName}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/{serviceName}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<Void> deleteProject(@PathVariable("projectName") String name) {
-        projectRepository.delete(projectRepository.findOneProjectByName(name));
+    public ResponseEntity<Void> deleteProject(@PathVariable("serviceName") String name) {
+        serviceRepository.delete(serviceRepository.findOneServiceByName(name));
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{projectName}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/{serviceName}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<Void> updateProjectData(@PathVariable("projectName") String projectName,
-                    @RequestBody Project project, UriComponentsBuilder builder) {
-        if (null != readProject(project.getName())) {
-            projectRepository.save(project);
-            UriComponents uri = builder.path("/projects/" + project.getName()).build();
+    public ResponseEntity<Void> updateProjectData(@PathVariable("serviceName") String serviceName,
+                    @RequestBody Service service, UriComponentsBuilder builder) {
+        if (null != readService(service.getName())) {
+            serviceRepository.save(service);
+            UriComponents uri = builder.path("/services/" + service.getName()).build();
             HttpHeaders headers = new HttpHeaders();
             headers.setLocation(uri.toUri());
             return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
@@ -94,11 +94,11 @@ public class ProjectsControler {
 
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<Void> submitProject(@RequestBody Project project,
+    public ResponseEntity<Void> submitProject(@RequestBody Service service,
                     UriComponentsBuilder builder) {
-        if (null == readProject(project.getName())) {
-            projectRepository.save(project);
-            UriComponents uri = builder.path("/projects/" + project.getName()).build();
+        if (null == readService(service.getName())) {
+            serviceRepository.save(service);
+            UriComponents uri = builder.path("/services/" + service.getName()).build();
             HttpHeaders headers = new HttpHeaders();
             headers.setLocation(uri.toUri());
             return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
