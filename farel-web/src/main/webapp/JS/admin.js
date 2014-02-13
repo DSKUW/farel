@@ -65,4 +65,9 @@ function ProjectController($scope, $http) {
             alert("Project with this name already exists!");
         });
     };
+
+    $(window).load(function() {
+        if (location.pathname == "/edit.html")
+            document.getElementById("nameField").value = getUrlVars()["name"];
+    });
 }
