@@ -33,16 +33,35 @@
             </div>
             <!-- /.container-fluid -->
         </nav>
-        <form name="myForm" ng-controller="ServiceController">
-            Service Name: <input type="text" ng-model="finalSrvice.name" id="nameField" /> <br> Service Type: <select
-                id="dropDownList" ng-model="finalSrvice.serviceType" ng-init="finalSrvice.serviceType='0'">
-                <option value=0>Bug Tracking</option>
-                <option value=1>Code Review</option>
-                <option value=2>Continuous Integration</option>
-                <option value=3>Systems Monitoring</option>
-            </select><br> Service URL: <input type="text" ng-model="finalSrvice.address" id="address" /> <br> Service EndPoint: <input
-                type="text" ng-model="finalSrvice.restEndPoint" id="endPoint" /> <br>
-            <button ng-click="save()" id="addService">SAVE</button>
+        <form ng-controller="ServiceController">
+            <h3>Editing service</h3>
+            <br>
+            <table>
+                <tr>
+                    <td>Name:</td>
+                    <td><input type="text" ng-model="finalSrvice.name" id="nameField" style="width: 500px;" /></td>
+                </tr>
+                <tr>
+                    <td>Type:</td>
+                    <td><select id="dropDownList" style="width: 500px;">
+                            <option value=0>Bug Tracking</option>
+                            <option value=1>Code Review</option>
+                            <option value=2>Continuous Integration</option>
+                            <option value=3>Systems Monitoring</option>
+                    </select></td>
+                </tr>
+                <tr>
+                    <td>URL:</td>
+                    <td><input type="text" ng-model="finalSrvice.address" style="width: 500px;" id="address"/></td>
+                </tr>
+                <tr>
+                    <td>EndPoint:</td>
+                    <td><input type="text" ng-model="finalSrvice.restEndPoint" style="width: 500px;" id="endPoint"/></td>
+                </tr>
+                <tr>
+                    <td><button ng-click="save()" id="addService">CREATE</button></td>
+                </tr>
+            </table>
         </form>
 
         <div id="footer">Copyright UW, 2014</div>

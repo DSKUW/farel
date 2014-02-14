@@ -33,11 +33,18 @@
             </div>
             <!-- /.container-fluid -->
         </nav>
-        <form name="myForm" ng-controller="ProjectController">
-            Project attributes: <br> Name: <input type="text" ng-model="finalProject.name" id="nameField" />
-            <button ng-click="save()" id="saveProject">SAVE</button>
+        <form ng-controller="ProjectController">
+            <h3>Editing project</h3>
+            <table>
+                <tr>
+                    <td>Name:</td>
+                    <td><input type="text" ng-model="finalProject.name" id="nameField" style="width: 500px;" /></td>
+                </tr>
+                <tr>
+                    <td><button ng-click="save()" id="addProject">CREATE</button></td>
+                </tr>
+            </table>
         </form>
-
         <div id="footer">Copyright UW, 2014</div>
     </div>
 </body>
